@@ -1,0 +1,75 @@
+<?php
+//storing data into global variable
+  $institute_start_hour			= 9;
+  $institute_start_minute		= 30;
+  $institute_start_amorpm		= "am";
+  $institute_end_hour			= 16;
+  $institute_end_minute			= 00;
+  $institute_end_amorpm			= "pm";
+  $institute_time_gap			= 0.30;
+  $recess_count					= 1;
+  $first_recess_start_hour		= 12;
+  $first_recess_start_minute	= 30;
+  $first_recess_start_amorpm	= "pm";
+  $first_recess_end_hour		= 13;
+  $first_recess_end_minute		= 00;
+  $first_recess_end_amorpm		= "pm";
+  $first_recess_time_gap		= 0.30;
+  $second_recess_start_hour		= 1;
+  $second_recess_start_minute	= 0;
+  $second_recess_start_amorpm	= "pm";
+  $second_recess_end_hour		= 1;
+  $second_recess_end_minute		= 0;
+  $second_recess_end_amorpm		= "pm";
+  $second_recess_time_gap		= 0.30;
+  $daily_lecture_count			= 6;
+  $holiday						= 1;
+  $closed_day					= 3;
+  $halfday						= 1;
+  $opened_day					= 5;
+  $halfday_lecture_count		= 3;
+  $srno=1;
+
+ //calculating total number of lecture
+$five_days_lecture_count=$daily_lecture_count *5;
+$six_days_lecture_count=$daily_lecture_count *6;
+$fiveday_plus_halfday_lecture_count=$five_days_lecture_count + $halfday_lecture_count ;
+$total_day_count=6;
+ //allocating total number of lecture
+ if(($holiday == 1)&($halfday == 1)){
+	$total_lecture_count=$five_days_lecture_count;
+	$total_day_count=5;
+ }
+ else if(($holiday == 0)&($halfday == 1)){
+	$total_lecture_count=$fiveday_plus_halfday_lecture_count;
+ }
+ else if(($holiday == 0)&($halfday == 0)){
+	$total_lecture_count=$six_days_lecture_count;
+ }
+ $number_after_point=0.00;
+//
+for($i=$institute_start_hour;$i <= $institute_end_hour;)
+{
+    if($recess_count == 1)
+    {
+       $i;//floor($i);
+    }
+    else
+    {
+        echo "<br>";
+    }
+	$number_after_point=$number_after_point+$institute_time_gap;
+	 if($number_after_point >= "0.60" )
+	 {
+		 echo "<br>".$number_after_point=$number_after_point-"0.60";
+		 echo "<br>".$i=$i+1;
+	 }
+	 $i=$i+$number_after_point;
+}
+	/*
+
+$fullpath = 'jklm/file.ext/hhshsh';
+$folder = substr($fullpath, 0, strpos($fullpath, '/'));
+echo $folder;
+// Output => folderName*/
+?>

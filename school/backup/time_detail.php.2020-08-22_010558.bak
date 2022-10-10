@@ -1,0 +1,96 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php')
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type='text/css' rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="javascript/jQuery 3.5.1.js"></script>
+<title>Time Detail</title>
+</head>
+<body>
+<form>
+	<div>
+		<table width="100%" border="1" cellspacing="1" cellpadding="1">
+            
+            //time 
+			<tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="strat_hour" id="strat_hour" placeholder="hour" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="strat_ minute" id="strat_ minute" placeholder=" minute" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="end_hour" id="end_hour" placeholder="hour" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="end_ minute" id="end_ minute" placeholder=" minute" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+            <tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="strat_hour" id="strat_hour" placeholder="hour" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="strat_ minute" id="strat_ minute" placeholder=" minute" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="end_hour" id="end_hour" placeholder="hour" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="end_ minute" id="end_ minute" placeholder=" minute" maxlength="2" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+		</table>
+	</div>	
+</form>
+</body>
+</html>

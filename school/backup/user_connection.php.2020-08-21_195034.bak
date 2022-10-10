@@ -1,0 +1,25 @@
+<?php
+//session start 
+@ob_start();
+session_start();
+
+//session file for user information
+include('session.php');
+
+//inilized requred variable with value
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = $institute_dbname;
+
+//creating connection to server
+$con = new mysqli($servername, $username, $password);
+
+//creating database
+$sql = "CREATE DATABASE ".$dbname."";
+$con->query($sql);
+
+//creating connection to database
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+?>	

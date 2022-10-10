@@ -1,0 +1,9 @@
+<?php 
+global $i;
+$i="hellow";
+function l()
+{
+	echo global $i;
+}
+l();
+?>

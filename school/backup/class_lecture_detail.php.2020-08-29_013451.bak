@@ -1,0 +1,296 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php');
+
+if(isset($_POST['class_lecture_detail']))
+{
+	echo "hi";
+}
+else if(isset($_POST['class_time_detail']))
+{
+	header('Location:time_detail.php?class_time_detail=class');
+}
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type='text/css' rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="javascript/jQuery 3.5.1.js"></script>
+<title>Class Lecture Detail</title>
+</head>
+<body>
+    <form>
+        <table width="100%" border="1" cellspacing="1" cellpadding="1">
+            <tr>
+                <th scope="row">All First Lecture Information</th>
+            </tr>
+        </table>
+        <table width="90%" border="1" cellspacing="5" cellpadding="3">
+			<tr>
+                <th scope="row">Day</th>
+                <th scope="row">Name Of Teacher</th>
+                <th scope="row">Name Of Lecture</th>
+                <th scope="row">Type Of Lecture</th>
+                <th scope="row">Name Of Place Where Lecture Will Held</th>
+                <th scope="row">Enter Total Number Of This Lecture In Week</th>
+			</tr>
+            <tr>
+                <td>Monday</td>
+                <td>
+                    <select name="teacher_name" id="teacher_name">
+                        <option value="ns" >Not Selected</option>
+                        <?php 
+                        
+                        /* Finding teacher detail table in database */
+	                    $sql_query2="SELECT * FROM teacher_detail";
+                        $result2=$conn->query($sql_query2);/* execution of query */
+                        if($result2 == "")
+	                    {
+                            echo '
+                            <script>
+                                alert("No Teacher found")
+                            </script>
+                            ';
+                        }
+                        else
+                        {
+                            /* counting no of row from teacher detail table */
+                            $teacher_detail_count=$result2->num_rows;
+		
+		                   if($result2->num_rows > 0)
+		                   {
+			                  while($data2=$result2->fetch_array())
+			                 {
+                                /* storing data from teacher detail table to array variable*/
+				                $srno[]							= $data2['srno'];
+				                $teacher_first_name[]			= $data2['col_teacher_first_name'];
+				                $teacher_last_name[]			= $data2['col_teacher_last_name'];
+			                 }
+		                  }
+		
+                          if( $teacher_detail_count == 0 )
+                           {
+                              echo '
+                                <script>
+                                    alert("No Teacher found")
+                                </script>
+                                ';
+                            }
+                            else
+                            {
+                                //displaying data of teacher detail table in loop
+                                for($i=0;$i<$teacher_detail_count;$i++)
+                                {
+                                    echo '
+                                    <option value='.$teacher_first_name[$i]."_".$teacher_last_name[$i].'>'.$teacher_first_name[$i]." ".$teacher_last_name[$i].'</option>
+                                    ';
+                                }
+                            }
+                        }
+                        
+                        ?>
+                    </select>
+                </td>
+                <td>
+                    <select name="lecture_name" id="lecture_name" onselect="display_lecture_type,placeandplace_type();">
+                        <option value="ns" >Not Selected</option>
+                        <?php 
+                        
+                        /* Finding lecture information table in database */
+	                    $sql_query2="SELECT * FROM lecture_information";
+                        $result2=$conn->query($sql_query2);/* execution of query */
+                        if($result2 == "")
+	                    {
+                            echo '
+                            <script>
+                                alert("No Lecture found")
+                            </script>
+                            ';
+                        }
+                        else
+                        {
+                            /* counting no of row from lecture information table */
+                            $lecture_information_count=$result2->num_rows;
+		
+		                   if($result2->num_rows > 0)
+		                   {
+			                  while($data2=$result2->fetch_array())
+			                 {
+                                /* storing data from teacher detail table to array variable*/
+				                $srno[]							= $data2['srno'];
+				                $lecture_full_name[]			= $data2['col_lecture_full_name'];
+				                $lecture_short_name[]			= $data2['col_lecture_short_name'];
+			                 }
+		                  }
+		
+                          if( $lecture_information_count == 0 )
+                           {
+                              echo '
+                                <script>
+                                    alert("No Lecture found")
+                                </script>
+                                ';
+                            }
+                            else
+                            {
+                                //displaying data of teacher detail table in loop
+                                for($i=0;$i<$lecture_information_count;$i++)
+                                {
+                                    echo '
+                                    <option value='.$lecture_full_name[$i].'>'.$lecture_full_name[$i]." (".$lecture_short_name[$i].')</option>
+                                    ';
+                                }
+                            }
+                        }
+                        
+                        ?>
+                    </select>
+                </td>
+                <td>
+                    <select name="lecture_type" id="lecture_type">
+                        <option value="ns" >Not Selected</option>
+                        <option value="th">Theory(TH)</option>
+                        <option value="pr">Pratical(PR)</option>
+                        <option value="ea">Extracurricular Activities(EA)</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="lecture_place_name" id="lecture_place_name">
+                        <option value="ns" >Not Selected</option>
+                        <?php
+                            for($i=0;$i<2;$i++)
+                            {
+                                echo '<option value='.$i.'>'.$i.'</option>';
+                            }
+                        ?>
+                    </select>
+                    <select name="alternative_lecture_place_name" id="lecture_place_name">
+                        <option value="ns" >Not Selected</option>
+                        <?php
+                            for($i=0;$i<2;$i++)
+                            {
+                                echo '<option value='.$i.'>'.$i.'</option>';
+                            }
+                        ?>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="ns" >Not Selected</option>
+                        <option value="1" >1</option>
+                        <option value="2" >2</option>
+                    </select>
+                </td>
+			</tr>
+             <tr>
+                <td>Tuesday</td>
+            </tr>
+            <tr>
+                <td>Wensday</td>
+            </tr>
+            <tr>
+                <td>Thursday</td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellspacing="1" cellpadding="1">  
+            <tr>
+                <th scope="row">All Before Recess Lecture Information(Not Include First Lecture)</th>
+            </tr>
+        </table>
+        <table width="50%" border="1" cellspacing="1" cellpadding="1">  
+            <tr>
+                <th scope="col" colspan="2">Lecture 1</th>
+            </tr>
+            <tr>
+                <th scope="row">Name Of Teacher</th>
+                <td>
+                    <select name="teacher_name" id="teacher_name">
+                        <option value="ns" >Not Selected</option>
+                        <?php
+                            for($i=0;$i<2;$i++)
+                            {
+                                echo '<option value='.$i.'>'.$i.'</option>';
+                            }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Name Of Lecture</th>
+                <td>
+                    <select name="lecture_type" id="lecture_type">
+                        <option value="ns" >Not Selected</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Type Of Lecture</th>
+                <td>
+                    <select name="lecture_type" id="lecture_type">
+                        <option value="ns" >Not Selected</option>
+                        <option value="th">Theory(TH)</option>
+                        <option value="pr">Pratical(PR)</option>
+                        <option value="ea">Extracurricular Activities(EA)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Name Of Place Where Lecture Will Held</th>
+                <td>
+                    <select name="lecture_place_name" id="lecture_place_name">
+                        <option value="ns" >Not Selected</option>
+                        <?php
+                            for($i=0;$i<2;$i++)
+                            {
+                                echo '<option value='.$i.'>'.$i.'</option>';
+                            }
+                        ?>
+                    </select>
+                    <select name="alternative_lecture_place_name" id="lecture_place_name">
+                        <option value="ns" >Not Selected</option>
+                        <?php
+                            for($i=0;$i<2;$i++)
+                            {
+                                echo '<option value='.$i.'>'.$i.'</option>';
+                            }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Enter Total Number Of This Lecture In Week</th>
+                <td>
+                    <input type="text" name="" id="" placeholder="">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellspacing="1" cellpadding="1">  
+            <tr>
+                <th scope="row">All After Recess Lecture Information</th>
+            </tr>
+        </table>
+        <table width="50%" border="1" cellspacing="1" cellpadding="1">  
+            <tr>
+                <th scope="row">&nbsp;</th>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<?php 
+$specialchar2 = array("`", "~", "!", "@", "$","#", "%", "^", "&", "*", "-", "_", "=", "+", ".", "/" , "|", "?");
+	$specialchar1 = array_rand($specialchar2, 2);
+	$specialchar=$specialchar2[$specialchar1[0]];
+
+	$alphabet2 = array("a", "b", "c", "d", "e","f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p" , "q", "r", "s", "t", "u", "v", "w","x", "y", "z","A", "B", "C", "D", "E","F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P" , "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z" );
+	$alphabet1 = array_rand($alphabet2, 4);
+	$alphabets = $alphabet2[$alphabet1['0']].$alphabet2[$alphabet1['1']];
+	$alphabet =$alphabet2[$alphabet1['2']].$alphabet2[$alphabet1['3']];
+
+	$numerical2 = array("1", "2", "3", "4", "5","6", "7", "8", "9");
+	$numerical1 = array_rand($numerical2, 4);
+	$numericals = $numerical2[$numerical1['0']].$numerical2[$numerical1['1']];
+	$numerical=$numerical2[$numerical1['2']].$numerical2[$numerical1['3']];
+
+	$password=$alphabets.$numericals.$specialchar.$alphabet.$numerical
+	/*
+$h=5;
+$v=6;
+$m=66;
+$n=665;
+$i="hellow";
+function l(
+$h,
+$v,
+$m,
+$n,
+$i
+)
+{
+	echo $i;
+	echo $h;
+}
+l(
+$h,
+$v,
+$m,
+$n,
+$i
+);
+
+$fullpath = 'jklm/file.ext/hhshsh';
+$folder = substr($fullpath, 0, strpos($fullpath, '/'));
+echo $folder;
+// Output => folderName*/
+?>

@@ -1,0 +1,80 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php')
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type='text/css' rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="javascript/jQuery 3.5.1.js"></script>
+<title>Information</title>
+</head>
+<body>
+<?php
+if(isset($_POST['lecture_detail']))
+{
+    echo '    
+    <form method="post" target="_self" action="insert_information_back.php">
+        <table width="100%" border="1" cellspacing="1" cellpadding="1">
+            <tr>
+                <th scope="row" colspan="3">Lecture Detail</th>
+            </tr>
+            <tr>
+                <th scope="row">Name</th>
+                <td>
+                    <input type="text" name="full_lecture_name" id="full_lecture_name" placeholder="Name">
+                </td>
+            </tr>
+        
+            <tr>
+                <th scope="row">Short Name</th>
+                <td>
+                    <input type="text" name="short_lecture_name" id="short_lecture_name" placeholder="Short Name" maxlength="5">
+                </td>
+            </tr>
+        
+            <tr>
+                <th scope="row">Type</th>
+                <td>
+                    <select name="lecture_type" id="lecture_type">
+                        <option>Theory(TH)</option>
+                        <option>Pratical(PR)</option>
+                        <option>Extracurricular Activities(EA)</option>
+                    </select>
+                </td>
+            </tr>
+        
+            <tr>
+                <th scope="row">Where Lecture will held ?</th>
+                <td>
+                    <select name="lecture_place" id="lecture_place">
+                        <option>IN Classroom</option>
+                        <option>IN Lab</option>
+                        <option>In Auditorium</option>
+                        <option>On Grounded</option>
+                    </select>
+                </td>
+            </tr>
+        
+            <tr>
+                <th scope="row">Name of Lab/Auditorium/Grounded</th>
+                <td>
+                    <input type="text" name="lecture_place_name" id="lecture_place_name" placeholder="Name">
+                </td>
+            </tr>
+        </table>
+    </form>';
+}
+?>
+</body>
+</html>

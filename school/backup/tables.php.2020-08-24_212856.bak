@@ -1,0 +1,53 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php');
+
+/* create user class_data table  */
+  $sql_query1="CREATE TABLE IF NOT EXISTS class_data
+   ( /* Column name       Column data type */
+		srno           	  int ,
+		class_name        text,
+		class_div         int,   
+		PRIMARY KEY (`srno`)
+	);";
+  $conn->query($sql_query1);/* execution of query */	
+  
+ /* create user institute_time_detail table  */
+  $sql_query2="CREATE TABLE IF NOT EXISTS institute_time_detail
+   ( /* Column name       Column data type */
+		srno           	 				 	int,
+		col_institute_start_hour         	int,
+		col_institute_start_minute       	int,
+		col_institute_start_amorpm       	text,
+		col_institute_end_hour        	 	int,
+		col_institute_end_minute       	 	int,
+		col_institute_end_amorpm       		text,
+		col_recess_count       			 	int,
+		col_first_recess_start_hour         int,
+		col_first_recess_start_minute       int,
+		col_first_recess_start_amorpm       text,
+		col_first_recess_end_hour        	int,
+		col_first_recess_end_minute       	int,
+		col_first_recess_end_amorpm       	text,		
+		col_second_recess_start_hour        int,
+		col_second_recess_start_minute      int,
+		col_second_recess_start_amorpm      text,
+		col_second_recess_end_hour        	int,
+		col_second_recess_end_minute       	int,
+		col_second_recess_end_amorpm       	text,		
+		col_daily_lecture_count       		text,
+		col_holiday			        		text,				
+		col_closed_day			       		text,	
+		col_halfday       			       	text,		
+		col_not_closed_day			  		text,	
+        col_halfday_lecture_count       	text,
+		PRIMARY KEY (`srno`)
+	);";
+  $conn->query($sql_query2);/* execution of query */	
+?>

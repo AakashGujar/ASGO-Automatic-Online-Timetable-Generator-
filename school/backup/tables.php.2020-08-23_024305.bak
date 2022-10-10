@@ -1,0 +1,22 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php');
+
+$sql3 = "CREATE TABLE adminusers(
+  `srno`INT NOT NULL AUTO_INCREMENT , 
+  `firstname`text,
+  `lastname`text,
+  `username`text,
+  `password`text,
+  PRIMARY KEY (`srno`),
+  UNIQUE(`srno`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
+;";
+$conn->query($sql3);	
+?>

@@ -1,0 +1,48 @@
+<?php
+//session start 
+@ob_start();
+session_start();
+
+//connection to database
+include('connection.php')
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage</title>
+</head>
+<body>
+
+<div class="" id="">
+<form method="post" target="_self" action="time_detail.php">
+	
+	<button type="submit" name="institute_time_detail" id="institute_time_detail" >Institute</button>
+	
+	<button type="submit" name="teacher_time_detail" id="teacher_time_detail" >Teacher</button>
+
+	<button type="submit" name="class_time_detail" id="class_time_detail" >Class</button>
+
+</form>
+</div>
+
+<form method="post" target="_self" action="">
+	<button type="submit" name="" id="" ></button>
+</form>
+<form method="post" target="_self" action="">
+	<button type="submit" name="" id="" ></button>
+</form>
+<form method="post" target="_self" action="">
+	<button type="submit" name="" id="" ></button>
+</form>
+<form method="post" target="_self" action="">
+	<button type="submit" name="" id="" ></button>
+</form>
+<form method="post" target="_self" action="">
+	<button type="submit" name="" id="" ></button>
+</form>
+</body>
+</html>

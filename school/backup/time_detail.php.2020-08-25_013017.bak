@@ -1,0 +1,697 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php');
+
+//declaration global variable
+$class_detail="";
+$selection="";
+$newdata="";
+$class_table_name="";
+$teacher_table_name="";
+
+//identify type of time detail
+if(isset($_POST['institute_time_detail']))
+{
+	  $type_name="Institute";
+	/* Finding institute_time_detail table in database */
+	$sql_query1="SELECT * FROM institute_time_detail";
+	$result1=$conn->query($sql_query1);/* execution of query */
+	if($result1 == "")
+	{
+		//not get institute_time_detail table in database
+		$newdata="1";
+		
+		$button='
+			<tr>
+                <td><button type="submit" name="insert_institute_time_detail" id="insert_institute_time_detail">Insert</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>	
+	';
+	}
+	else
+	{
+		//get institute_time_detail table in database
+		$newdata="0";
+		/* extractinng institute_time_detail table in database */
+		$data = $result1->fetch_array();
+		
+		$button='
+            <tr>    
+                <td><button type="submit" name="update_institute_time_detail" id="update_institute_time_detail">Update</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+	';
+	}
+			
+}
+
+if(isset($_POST['teacher_time_detail']))
+{
+    $selection='
+	  <table width="100%" border="0" cellspacing="0" cellpadding="5">
+		  <form method="post" target="_self" action="time_detail.php" >
+             <tr>
+                <th scope="row" colspan="4">Select Teacher</th>
+             </tr>
+             <tr colspan="4">
+                <th scope="row" >
+                    <select name="select_teacher_name">
+                     <option value="ns" >Not Selected</option>
+                     <option value="het sheth" >het sheth</option>
+					';
+                        for($i=0;$i<1;$i++)
+                        {
+                            $selection.='
+                                    <option value='.$i.'>'.$i.'</option>
+                                    ';
+                        }
+     $selection.='
+                    </select>
+                </th>
+				<td>
+					<input type=submit class="check_teacher_name" id="check_teacher_name" value="Next">
+				</td>
+             </tr>
+		  </form>
+	  </table>	
+            ';		
+}
+
+if(isset($_POST['select_teacher_name']))
+{
+	$teacher_table_name=$_POST['select_teacher_name'];	
+    $type_name="Teacher";
+	/* Finding institute_time_detail table in database */
+	$sql_query3="SELECT * FROM ".$teacher_table_name."_time_detail";
+	$result3=$conn->query($sql_query3);/* execution of query */
+	if($result3 == "")
+	{
+		//not get institute_time_detail table in database
+		$newdata="1";
+		
+		$button='
+			<tr>
+                <td><button type="submit" name="insert_teacher_time_detail" id="insert_teacher_time_detail">Insert</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>		
+	';
+	}
+	else
+	{
+		//get institute_time_detail table in database
+		$newdata="0";
+		/* extractinng institute_time_detail table in database */
+		$data = $result3->fetch_array();
+		
+		$button='
+            <tr>    
+                <td><button type="submit" name="update_teacher_time_detail" id="update_teacher_time_detail">Update</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+	';
+	}
+	
+}
+
+if(isset($_POST['class_time_detail']) || isset($_GET['class_time_detail']))
+{
+    $selection='
+	<form method="post" target="_self" action="time_detail.php" >
+        <table width="100%" border="0" cellspacing="0" cellpadding="5">
+            <tr>
+                <th scope="col" colspan="2">Insert New Class Here</th>
+            </tr>
+            <tr> 
+                <td >
+                    <input type="text" name="class_name" id="class_name" placeholder="Class Name">
+                </td>
+                <td>
+                    <input type="text" name="class_div" id="class_div" placeholder="Class Div">
+                </td>
+           <td>
+					<input type=submit class="check_class_name" id="check_class_name" value="Next">
+				</td>
+             </tr>
+        </table>
+	</form>		
+            ';
+   
+}
+
+if(isset($_POST['class_name']))
+{
+	$class_table_name=$_POST['class_name'].$_POST['class_div'];	
+    $type_name="Class";
+    
+	/* Finding institute_time_detail table in database */
+	$sql_query4="SELECT * FROM ".$class_table_name."_time_detail";
+	$result4=$conn->query($sql_query4);/* execution of query */
+	if($result4 == "")
+	{
+		//not get institute_time_detail table in database
+		$newdata="1";
+		
+		$class_detail='
+            <tr>
+                <th scope="row" colspan="4">Student Detail</th>
+            </tr>
+            <tr>  
+				<th scope="row" >how many Student are there in class ?</th>
+				<td> <input type="number" name="post_student_count" id="post_student_count" min="1" max="100" ></td>
+				<td> </td>
+                <td> </td>
+            </tr>
+            <tr>  
+				<th scope="row" >how many Batch are there in pratical ?</th>
+				<td> <input type="number" name="post_batch_count" id="post_batch_count" min="1" max="10" ></td>
+				<td> </td>
+                <td> </td>
+            </tr>
+            ';
+			
+		$button='
+			<tr>
+                <td><button type="submit" name="insert_class_time_detail" id="insert_class_time_detail">Insert</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>	
+	';
+	}
+	else
+	{
+		//get institute_time_detail table in database
+		$newdata="0";
+		/* extractinng institute_time_detail table in database */
+		$data = $result4->fetch_array();
+		
+		$class_detail='
+            <tr>
+                <th scope="row" colspan="4">Student Detail</th>
+            </tr>
+            <tr>  
+				<th scope="row" >how many Student are there in class ?</th>
+				<td> <input type="number" name="post_student_count" id="post_student_count" min="1" max="100" ></td>
+				<td> </td>
+                <td> </td>
+            </tr>
+            <tr>  
+				<th scope="row" >how many Batch are there in pratical ?</th>
+				<td> <input type="number" name="post_batch_count" id="post_batch_count" min="1" max="10" ></td>
+				<td> </td>
+                <td> </td>
+            </tr>
+            ';
+			
+		$button='
+            <tr>    
+                <td><button type="submit" name="update_teacher_time_detail" id="update_teacher_time_detail">Update</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+	';
+	}
+	
+}
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type='text/css' rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="javascript/jQuery 3.5.1.js"></script>
+<title>Time Detail</title>
+</head>
+<body>
+ <!-- section of techer/class -->
+<?php 
+  echo $selection;
+if($newdata == "1")
+{
+echo '
+<form method="post" target="_self" action="time_detail_back.php" >
+	<input type=hidden id=post_class_name name=post_class_name value="'.$class_table_name.'">
+	<input type=hidden id=post_teacher_name name=post_teacher_name value="'.$teacher_table_name.'">
+    <table width="100%" border="1" cellspacing="1" cellpadding="1">
+            <!-- time detail -->
+            <tr>
+                <th scope="row" colspan="4">'. $type_name.' Time Detail</th>
+            </tr>
+			<tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="post_institute_strat_hour" id="post_institute_strat_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_institute_strat_minute" id="post_institute_strat_minute" placeholder=" minute" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_institute_start_amorpm">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="post_institute_end_hour" id="post_institute_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_institute_end_minute" id="post_institute_end_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_institute_end_amorpm">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+            
+            <!-- recess detail -->
+            <tr> 
+				<th scope="row" >how many recess will there on each day ?</th>
+				<td><input type="radio" id="first_recess" name="post_recess_count" value="1" checked> 1</td> 
+                <td><input type="radio" id="second_recess" name="post_recess_count" value="2"> 2</td> 
+				<td> </td>						
+            </tr> 
+             
+            <!-- recess 1 time detail -->
+            <tr>
+                <th scope="row" colspan="4">Recess Time Detail</th>
+            </tr>
+            <tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="post_first_recess_strat_hour" id="post_first_recess_strat_hour" placeholder="hour" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_first_recess_strat_minute" id="post_first_recess_strat_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_first_recess_start_amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="post_first_recess_end_hour" id="post_first_recess_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_first_recess_end_minute" id="post_first_recess_end_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_first_recess_end_amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+            
+             <!-- recess 2 time detail -->
+            <tr>
+                <th scope="row" colspan="4">Second Recess Time Detail</th>
+            </tr>
+            <tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="post_second_recess_strat_hour" id="post_second_recess_strat_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_second_recess_strat_minute" id="post_second_recess_strat_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_second_recess_start_amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="post_second_recess_end_hour" id="post_second_recess_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_second_recess_end_minute" id="post_second_recess_end_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_second_recess_end_amorpms">
+                        <option value="Ns" >Not selected</option>
+                        <option value="Am" >Am</option>
+                        <option value="Pm">Pm</option>
+                    </select>
+                </td>
+			</tr>
+            
+            <!-- student detail -->
+             '.$class_detail.'
+        
+            <!-- lecture detail -->
+            <tr>
+                <th scope="row" colspan="4">Lecture Detail</th>
+            </tr>
+            <tr> 
+				<th scope="row">how many period will there in a day ?</th>
+				<td> <input type="number" name="post_daily_lecture_count" id="post_daily_lecture" placeholder="Daily Lecture Count" min="1" max="10" ></td>
+				<td> </td>
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row">Whether institute will remain close in weekdays(included saturday) ?</th>
+				<td><input type="radio" id="closed_day_yes" name="post_holiday" value="1" checked> Yes</td> 
+                <td><input type="radio" id="closed_day_no" name="post_holiday" value="0"> No</td> 
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row" >on which day institute will remain close ?</th>
+                <td> 
+                    <select name="post_closed_day">
+						<option value="ns">Not Selected</option>
+                        <option value="mon">Monday</option>
+                        <option value="tue">Tuesday</option>
+                        <option value="wed">Wensday</option>
+				        <option value="thurs">thursday</option>
+                        <option value="fri">friday</option>
+                        <option value="sat">saturday</option>
+                    </select>
+                </td>
+				<td> </td>
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row" >Whether institute having halfday ?</th>
+				<td><input type="radio" id="halfday_yes" name="post_halfday" value="1" checked> Yes</td> 
+                <td><input type="radio" id="halfday_no" name="post_halfday" value="0" > No</td> 
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row" >on which day institute having halfday ?</th>
+                <td> 
+                    <select name="post_opened_day">
+                        <option value="ns">Not Selected</option>
+                        <option value="mon">Monday</option>
+                        <option value="tue">Tuesday</option>
+				        <option value="wed">Wensday</option>
+				        <option value="thurs">thursday</option>
+                        <option value="fri">friday</option>
+                        <option value="sat">saturday</option>
+                    </select>
+                </td>
+				<td> </td>
+				<td> </td>
+            </tr> 
+            <tr>  
+				<th scope="row" >how many lecture will there ?</th>
+				<td colspan="1"> <input type="number" name="post_halfday_lecture_count" min="1" max="10" placeholder="Halfday Lecture Count"></td>
+				<td> </td>
+				<td> </td>
+            </tr>	
+            '.$button.'
+		</table>	
+</form>
+  ';         
+}
+if($newdata == "0")
+{
+  echo '
+<form method="post" target="_self" action="time_detail_back.php" >
+	<input type=hidden id=post_class_name name=post_class_name value="'.$class_table_name.'">
+	<input type=hidden id=post_teacher_name name=post_teacher_name value="'.$teacher_table_name.'">
+    <table width="100%" border="1" cellspacing="1" cellpadding="1">
+            <!-- time detail -->
+            <tr>
+                <th scope="row" colspan="4">'. $type_name.' Time Detail</th>
+            </tr>
+			<tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="post_institute_strat_hour" id="post_institute_strat_hour" placeholder="hour"  min="1" max="24" value="'.$data[''].'" >
+				</td>
+				<td>
+                    <input type="number" name="post_institute_strat_minute" id="post_institute_strat_minute" placeholder=" minute" min="1" max="24" value="'.$data[''].'" >
+				</td>
+				<td>
+                    <select name="post_institute_start_amorpm">
+                        <option value="'.$data[''].'" >value='.$data[''].'</option>
+                        <option value="Ns" >Not selected</option>';
+						if($data[''] == "Am")
+						{
+							echo '<option value="Am" >Am</option>';
+						}
+						else
+						{
+							echo '<option value="Pm">Pm</option>';
+						}							
+              echo '</select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="post_institute_end_hour" id="post_institute_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_institute_end_minute" id="post_institute_end_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_institute_end_amorpm">
+                        <option value="'.$data[''].'" >value='.$data[''].'</option>
+                        <option value="Ns" >Not selected</option>';
+						if($data[''] == "Am")
+						{
+							echo '<option value="Am" >Am</option>';
+						}
+						else
+						{
+							echo '<option value="Pm">Pm</option>';
+						}							
+              echo '</select>
+                </td>
+			</tr>
+            
+            <!-- recess detail -->
+            <tr> 
+				<th scope="row" >how many recess will there on each day ?</th>
+				<td><input type="radio" id="first_recess" name="post_recess_count" value="1" checked> 1</td> 
+                <td><input type="radio" id="second_recess" name="post_recess_count" value="2"> 2</td> 
+				<td> </td>						
+            </tr> 
+             
+            <!-- recess 1 time detail -->
+            <tr>
+                <th scope="row" colspan="4">Recess Time Detail</th>
+            </tr>
+            <tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="post_first_recess_strat_hour" id="post_first_recess_strat_hour" placeholder="hour" min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_first_recess_strat_minute" id="post_first_recess_strat_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_first_recess_start_amorpms">
+                        <option value="'.$data[''].'" >value='.$data[''].'</option>
+                        <option value="Ns" >Not selected</option>';
+						if($data[''] == "Am")
+						{
+							echo '<option value="Am" >Am</option>';
+						}
+						else
+						{
+							echo '<option value="Pm">Pm</option>';
+						}							
+              echo '</select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="post_first_recess_end_hour" id="post_first_recess_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_first_recess_end_minute" id="post_first_recess_end_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_first_recess_end_amorpms">
+                        <option value="'.$data[''].'" >value='.$data[''].'</option>
+                        <option value="Ns" >Not selected</option>';
+						if($data[''] == "Am")
+						{
+							echo '<option value="Am" >Am</option>';
+						}
+						else
+						{
+							echo '<option value="Pm">Pm</option>';
+						}							
+              echo '</select>
+                </td>
+			</tr>
+            
+             <!-- recess 2 time detail -->
+            <tr>
+                <th scope="row" colspan="4">Second Recess Time Detail</th>
+            </tr>
+            <tr>
+				<th scope="row">Start Time</th>
+				<td>
+                    <input type="number" name="post_second_recess_strat_hour" id="post_second_recess_strat_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_second_recess_strat_minute" id="post_second_recess_strat_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_second_recess_start_amorpms">
+                        <option value="'.$data[''].'" >value='.$data[''].'</option>
+                        <option value="Ns" >Not selected</option>';
+						if($data[''] == "Am")
+						{
+							echo '<option value="Am" >Am</option>';
+						}
+						else
+						{
+							echo '<option value="Pm">Pm</option>';
+						}							
+              echo '</select>
+                </td>
+			</tr>
+			<tr>
+				<th scope="row">End Time</th>
+				<td>
+                    <input type="number" name="post_second_recess_end_hour" id="post_second_recess_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <input type="number" name="post_second_recess_end_minute" id="post_second_recess_end_minute" placeholder=" minute"  min="1" max="24" autofocus  >
+				</td>
+				<td>
+                    <select name="post_second_recess_end_amorpms">
+                        <option value="'.$data[''].'" >value='.$data[''].'</option>
+                        <option value="Ns" >Not selected</option>';
+						if($data[''] == "Am")
+						{
+							echo '<option value="Am" >Am</option>';
+						}
+						else
+						{
+							echo '<option value="Pm">Pm</option>';
+						}							
+              echo '</select>
+                </td>
+			</tr>
+            
+            <!-- student detail -->
+             '.$class_detail.'
+        
+            <!-- lecture detail -->
+            <tr>
+                <th scope="row" colspan="4">Lecture Detail</th>
+            </tr>
+            <tr> 
+				<th scope="row">how many period will there in a day ?</th>
+				<td> <input type="number" name="post_daily_lecture_count" id="post_daily_lecture" placeholder="Daily Lecture Count" min="1" max="10" ></td>
+				<td> </td>
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row">Whether institute will remain close in weekdays(included saturday) ?</th>
+				<td><input type="radio" id="closed_day_yes" name="post_holiday" value="1" checked> Yes</td> 
+                <td><input type="radio" id="closed_day_no" name="post_holiday" value="0"> No</td> 
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row" >on which day institute will remain close ?</th>
+                <td> 
+                    <select name="post_closed_day">';
+						$first_option=$data[''];
+					    $day_array=array('Monday','Tuesday','Wensday','Thursday','Friday','Saturday')
+						
+						echo '
+							<option value="'.$first_option.'">'.$day_array[$first_option].'</option>
+							<option value="ns">Not Selected</option>
+						  ';
+						
+						for($i=0;$i < 6;$i++)
+						{
+							if($data[''] != $i)
+							{
+								echo '<option value=".'$i'.">'.$day_array[$i].'</option>';
+							}
+						}
+						
+              echo '</select>
+                </td>
+				<td> </td>
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row" >Whether institute having halfday ?</th>
+				<td><input type="radio" id="halfday_yes" name="post_halfday" value="1" checked> Yes</td> 
+                <td><input type="radio" id="halfday_no" name="post_halfday" value="0" > No</td> 
+				<td> </td>
+            </tr> 
+            <tr> 
+				<th scope="row" >on which day institute having halfday ?</th>
+                <td> 
+                    <select name="post_opened_day">';
+						$first_option=$data[''];
+					    $day_array=array('Monday','Tuesday','Wensday','Thursday','Friday','Saturday')
+						
+						echo '
+							<option value="'.$first_option.'">'.$day_array[$first_option].'</option>
+							<option value="ns">Not Selected</option>
+						  ';
+						
+						for($i=0;$i < 6;$i++)
+						{
+							if($data[''] != $i)
+							{
+								echo '<option value=".'$i'.">'.$day_array[$i].'</option>';
+							}
+						}
+						
+              echo '</select>
+                </td>
+				<td> </td>
+				<td> </td>
+            </tr> 
+            <tr>  
+				<th scope="row" >how many lecture will there ?</th>
+				<td colspan="1"> <input type="number" name="post_halfday_lecture_count" min="1" max="10" placeholder="Halfday Lecture Count"></td>
+				<td> </td>
+				<td> </td>
+            </tr>	
+            '.$button.'
+		</table>	
+</form>
+  ';  
+}  
+?>
+</body>  
+</html>

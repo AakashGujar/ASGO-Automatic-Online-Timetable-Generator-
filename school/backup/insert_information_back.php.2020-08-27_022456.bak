@@ -1,0 +1,149 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//inlized global variable
+$lecture_information_count="";
+$lecture_place_detail_count="";
+$teacher_detail_count="";
+$student_detail_count="";
+    
+//connection to database
+include('user_connection.php');
+
+//exctration of data from table lecture information
+if(isset($_POST['display_lecture_information']))
+{
+    /* Finding institute_time_detail table in database */
+	$sql_query1="SELECT * FROM lecture_information";
+	$result1=$conn->query($sql_query1);/* execution of query */
+    if($result1 == "")
+	{
+        echo '
+            <tr>
+                <td colspan="6">No Lecture Found</td>
+            </tr>
+            ';
+    }
+    else
+    {
+        $lecture_information_count=$result1->num_rows;
+        $data1=$result1->fetch_array();
+		while($result1->num_rows > 0)
+		{
+			$srno[]					= $data1['srno'];
+			$lecture_name[]			= $data1['col_lecture_name'];
+			$lecture_short_name[]	= $data1['col_lecture_short_name'];
+			$lecture_type[]			= $data1['col_lecture_type'];
+			$lecture_place[]		= $data1['col_lecture_place'];
+		}
+        if( $lecture_information_count == 0 )
+        {
+            echo '
+            <tr>
+                <td colspan="6">No Lecture Found</td>
+            </tr>
+            ';
+        }
+        else
+        {
+            for($i=0;$i<$lecture_information_count;$i++)
+            {
+               echo '
+                <tr>
+                    <td>'.data['col_lecture_name'][$i].'</td>
+                    <td>'.data['col_lecture_short_name'][$i].'</td>
+                    <td>
+                        <select name="post_lecture_type">';
+						  $first_option=$data['col_lecture_type'][$i];
+					       $lecture_type_array=array('Theory(TH)','Pratical(PR)','Extracurricular Activities(EA)');
+						
+						  echo '
+							<option value="'.$first_option.'">'.$lecture_type_array[$first_option].'</option>
+						  ';
+						
+						  for($j=0;$j < 3;$j++)
+						  {
+							if($data['col_lecture_type'] != $j)
+							{
+								echo '<option value="'.$j.'">'.$lecture_type_array[$j].'</option>';
+							}
+						  }
+						
+                echo '	</select>
+					</td>
+                    <td>
+                        <select name="post_lecture_type">';
+						  $first_option=$data['col_lecture_place'];
+					       $lecture_place_array=array('Classroom','Lab','Auditorium','Ground');
+						
+						  echo '
+							<option value="'.$first_option.'">'.$lecture_place_array[$first_option].'</option>
+						  ';
+						
+						  for($j=0;$j < 4;$j++)
+						  {
+							if($data['col_lecture_place'][$i] != $j)
+							{
+								echo '<option value="'.$j.'">'.$lecture_place_array[$j].'</option>';
+							}
+						  }
+						
+                echo '	</select>
+					</td>
+                    <td><button type="submit" name="update_lecture_information" id="'.data['srno'][$i].'" onclick="update_lecture_information(this.id)">Update</button></td>
+                    <td><button type="submit" name="remove_lecture_information" id="'.data['srno'][$i].'" onclick="remove_lecture_information(this.id)">Remove</button></td>
+                </tr>
+               '; 
+            }
+        }
+        
+    }
+}
+
+//insert lecture information
+if(isset($_POST['insert_lecture_information']))
+{
+    /* creating user lecture information table  */
+    $sql_query2="CREATE TABLE IF NOT EXISTS lecture_information
+    ( /* Column name                        Column data type */
+        srno            	    int NOT NULL AUTO_INCREMENT,
+        col_lecture_name        text,
+        col_lecture_short_name  text,
+        col_lecture_type        text,
+        col_lecture_place       text,
+        PRIMARY KEY (`srno`)
+	);";
+    $conn->query($sql_query2);/* execution of query */
+    
+    //storing data into variable
+     $lecture_name			= htmlspecialchars($_POST['post_lecture_name']);
+     $lecture_short_name	= htmlspecialchars($_POST['post_lecture_short_name']);
+     $lecture_type			= htmlspecialchars($_POST['post_lecture_type']);
+     $lecture_place			= htmlspecialchars($_POST['post_lecture_place']);
+    
+    /* inserting data in user institute_time_detail  ,teacher_time_detail and class_time_detail table */
+  $sql_statement1=$conn->prepare("
+  INSERT INTO lecture_information
+ (
+	srno,
+	col_lecture_name,
+	col_lecture_short_name,
+	col_lecture_type,
+	col_lecture_place
+ )VALUES(?,?,?,?,?)");
+  
+  $sql_statement1->bind_param("issss",
+    $srno,
+	$lecture_name,
+	$lecture_short_name,
+	$lecture_type,
+	$lecture_place
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+	
+?>

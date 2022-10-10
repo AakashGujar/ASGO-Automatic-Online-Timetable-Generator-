@@ -1,0 +1,1 @@
+global $institute_start_hour			= htmlspecialchars($_POST['post_institute_strat_hour']);

@@ -1,0 +1,13 @@
+<?php
+//session start 
+@ob_start();
+session_start();
+
+//inilized session variable
+$session["institute_short_name"]="svpvv";
+$session["institute_type"]="school";
+
+//inilized variable
+$dname=$session["institute_short_name"]."_".$session["institute_type"];
+
+?>

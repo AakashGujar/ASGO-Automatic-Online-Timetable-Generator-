@@ -1,0 +1,96 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//inlized global variable
+$lecture_information_count="";
+$lecture_place_detail_count="";
+$teacher_detail_count="";
+$student_detail_count="";
+    
+//connection to database
+include('user_connection.php');
+
+//exctration of data from table lecture information
+if(isset($_POST['display_lecture_information']))
+{
+    /* Finding institute_time_detail table in database */
+	$sql_query1="SELECT * FROM lecture_information";
+	$result1=$conn->query($sql_query1);/* execution of query */
+    if($result1 == "")
+	{
+        echo '
+            <tr>
+                <td colspan="6">No Lecture Found</td>
+            </tr>
+            ';
+    }
+    else
+    {
+        $lecture_information_count=$result1->num_rows;
+        $data1=$result1->fetch_array();
+        if( $lecture_information_count == 0 )
+        {
+            echo '
+            <tr>
+                <td colspan="6">No Lecture Found</td>
+            </tr>
+            ';
+        }
+        else
+        {
+            for($i=0;$i<$lecture_information_count;$i++)
+            {
+               echo '
+                <tr>
+                    <td>'.data['col_lecture_name'].'</td>
+                    <td>'.data['col_lecture_short_name'].'</td>
+                    <td>
+                        <select name="post_closed_day">';
+						  $first_option=$data['col_closed_day'];
+					       $day_array=array('Monday','Tuesday','Wensday','Thursday','Friday','Saturday');
+						
+						  echo '
+							<option value="'.$first_option.'">'.$day_array[$first_option].'</option>
+						  ';
+						
+						  for($i=0;$i < 6;$i++)
+						  {
+							if($data['col_closed_day'] != $i)
+							{
+								echo '<option value="'.$i.'">'.$day_array[$i].'</option>';
+							}
+						  }
+						
+                echo '</select>'.data['col_lecture_type'].'</td>
+                    <td>'.data['col_lecture_place'].'</td>
+                    <td><button type="submit" name="update_lecture_information" id="'.data['srno'].'" onclick="update_lecture_information(this.id)">Update</button></td>
+                    <td><button type="submit" name="remove_lecture_information" id="'.data['srno'].'" onclick="remove_lecture_information(this.id)">Remove</button></td>
+                </tr>
+               '; 
+            }
+        }
+        
+    }
+}
+
+//insert lecture information
+if(isset($_POST['insert_lecture_information']))
+{
+    /* creating user lecture information table  */
+    $sql_query1="CREATE TABLE IF NOT EXISTS lecture_information
+    ( /* Column name                        Column data type */
+        srno            	    int ,
+        col_lecture_name        text,
+        col_lecture_short_name  text,
+        col_lecture_type        text,
+        col_lecture_place       text,
+        PRIMARY KEY (`srno`)
+	);";
+    $conn->query($sql_query1);/* execution of query */
+}
+	
+?>

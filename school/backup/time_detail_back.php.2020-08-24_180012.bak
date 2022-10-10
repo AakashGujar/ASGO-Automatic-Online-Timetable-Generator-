@@ -1,0 +1,116 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php');
+
+//insert institute time detail function
+if(isset($_POST['insert_institute_time_detail']))
+{   
+
+}
+
+//insert teacher time detail function
+if(isset($_POST['insert_teacher_time_detail']))
+{
+$teacher_table_name=$_POST['select_teacher_name'];
+
+/* create user teacher_time_detail table  */
+  $sql_query1="CREATE TABLE IF NOT EXISTS ".$teacher_table_name."_time_detail
+   ( /* Column name       Column data type */
+		srno           	 				 	int,
+		col_institute_start_hour         	int,
+		col_institute_start_minute       	int,
+		col_institute_start_amorpm       	text,
+		col_institute_end_hour        	 	int,
+		col_institute_end_minute       	 	int,
+		col_institute_end_amorpm       		text,
+		col_recess_count       			 	int,
+		col_first_recess_start_hour         int,
+		col_first_recess_start_minute       int,
+		col_first_recess_start_amorpm       text,
+		col_first_recess_end_hour        	int,
+		col_first_recess_end_minute       	int,
+		col_first_recess_end_amorpm       	text,		
+		col_second_recess_start_hour        int,
+		col_second_recess_start_minute      int,
+		col_second_recess_start_amorpm      text,
+		col_second_recess_end_hour        	int,
+		col_second_recess_end_minute       	int,
+		col_second_recess_end_amorpm       	text,
+        col_daily_lecture_count       		text,
+		col_holiday			        		text,				
+		col_closed_day			       		text,		
+		col_closed_day			       		text,		
+		col_halfday       			       	text,
+        col_halfday_lecture_count       	text,
+		PRIMARY KEY (`srno`)
+	);";
+  $conn->query($sql_query1);/* execution of query */
+}
+
+//insert class time detail function
+if(isset($_POST['insert_class_time_detail']))
+{
+    
+if(isset($_POST['class_name']))
+{
+    $class_name=$_POST['class_name'];
+    $class_div=$_POST['class_div'];
+    $class_table_name=$class_name.$class_div;
+}
+  /* create user class_time_detail table  */
+  $sql_query2="CREATE TABLE IF NOT EXISTS ".$class_table_name."_time_detail
+   ( /* Column name       Column data type */
+		srno           	 				 	int,
+		col_institute_start_hour         	int,
+		col_institute_start_minute       	int,
+		col_institute_start_amorpm       	text,
+		col_institute_end_hour        	 	int,
+		col_institute_end_minute       	 	int,
+		col_institute_end_amorpm       		text,
+		col_recess_count       			 	int,
+		col_first_recess_start_hour         int,
+		col_first_recess_start_minute       int,
+		col_first_recess_start_amorpm       text,
+		col_first_recess_end_hour        	int,
+		col_first_recess_end_minute       	int,
+		col_first_recess_end_amorpm       	text,		
+		col_second_recess_start_hour        int,
+		col_second_recess_start_minute      int,
+		col_second_recess_start_amorpm      text,
+		col_second_recess_end_hour        	int,
+		col_second_recess_end_minute       	int,
+		col_second_recess_end_amorpm       	text,
+		col_student_count                	int,
+		col_batch_count                  	int,
+        col_daily_lecture_count       		text,
+		col_holiday			        		text,				
+		col_closed_day			       		text,		
+		col_closed_day			       		text,		
+		col_halfday       			       	text,
+        col_halfday_lecture_count       	text,
+		PRIMARY KEY (`srno`)
+	);";
+  $conn->query($sql_query2);/* execution of query */
+}  
+
+//update institute time detail function
+if(isset($_POST['update_institute_time_detail']))
+{
+}  
+
+//update teacher detail function
+if(isset($_POST['update_teacher_time_detail']))
+{
+}  
+
+//update class time detail function
+if(isset($_POST['update_class_time_detail']))
+{
+}  
+?>

@@ -1,0 +1,48 @@
+{
+  "id": "c5f9e97b-2016-4f44-b17e-3fe79cf6d982",
+  "version": "2.0",
+  "name": "timetable",
+  "url": "http://localhost",
+  "tests": [{
+    "id": "1b5fda15-8808-433b-8f8f-1e82f722e6fa",
+    "name": "n",
+    "commands": [{
+      "id": "e837330b-31af-4d4e-8ac3-e5883dac376c",
+      "comment": "",
+      "command": "open",
+      "target": "/school/muitple_class_insert_detail.php",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d6620428-9ea2-4d71-b7ef-e7353f330142",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "697x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0fe54454-b95f-4299-bd1c-e88c582633be",
+      "comment": "",
+      "command": "click",
+      "target": "name=insert_all_class_time_detail",
+      "targets": [
+        ["name=insert_all_class_time_detail", "name"],
+        ["css=button", "css:finder"],
+        ["xpath=//button[@name='insert_all_class_time_detail']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'enter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "e54960ad-6812-4b79-a060-a66391ea45bc",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["1b5fda15-8808-433b-8f8f-1e82f722e6fa"]
+  }],
+  "urls": ["http://localhost/"],
+  "plugins": []
+}

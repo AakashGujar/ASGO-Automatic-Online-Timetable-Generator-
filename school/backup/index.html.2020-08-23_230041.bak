@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<title>Chitra Art Printers</title>
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta http-equiv="content-Type" content="text/html"; charset="UTF-8">
+	<meta name="description" content="Chitra Art Printers IS IN Market Sinc 1997. Our Speciality Is In Sticker , Pvc box, Tag, box, Visiting Card, Pamphlet, Size Label And Also In All Types Of Multi-colour Printing And All Type Of Packing Material 
+	<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+	<meta name="author" content="Het Sheth">
+	                          <!-- responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+								  <!-- Icons -->	
+	<link rel="shortcut icon"  href="logo.png">
+	<link rel="icon" type="image/png"  href="logo.png">
+	<link rel="apple-touch-icon"  href="logo.png">
+                                  <!-- JavaScript Files -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/yourcode.js"></script>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+.textedit
+{
+    letter-spacing: 3px;
+}
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+    background-image: url('Capturef.PNG');
+    min-height: 80%;
+	background-size:80%;
+
+}
+
+/* Second image (Portfolio) */
+.bgimg-2 {
+    background-image: url("work.png");
+    min-height: 200px;
+}
+
+/* Third image (Contact) */
+.bgimg-3 {
+    background-image: url("contact.jpg");
+    min-height: 200px;
+	width:100%;
+}
+
+.w3-wide {letter-spacing: 10px;}
+.w3-hover-opacity {cursor: pointer;}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    }
+}
+
+                                 
+</style>
+<body id="home">
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="#home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> HOME</a>
+    <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-file-text"></i> INFORMATION</a>
+    <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> MY WORK EXAMPLE</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+    <a href="#pay" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-credit-card-alt" ></i> PAYMENT OPTION</a>
+    
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">INFORMATION</a>
+    <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">MY WORK EXAMPLE</a>
+    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+	<a href="#pays" class="w3-bar-item w3-button" onclick="toggleFunction()">PAYMENT OPTION</a>
+   
+  </div>
+</div>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 w3-display-container w3-opacity-min w3-hide-small"  id="home">
+  <div class="w3-display-bottommiddle" style="white-space:nowrap;">
+ <span class="w3-padding-large w3-xlarge w3-wide w3-animate-opacity ">&nbsp&nbsp&nbsp&nbsp welcome <span class="w3-hide-small">to</span> </span> <br>
+    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Chitra <span class="w3-hide-small">Art</span> printers</span><br>
+	<span class=" w3-padding-large w3-xlarge w3-wide w3-animate-opacity">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Website</span>
+  </div>
+</div>
+<div class="bgimg-1 w3-display-container w3-opacity-min w3-hide-large w3-hide-medium"  id="home">
+  <div class="w3-display-bottommiddle textedit w3-center" style="white-space:nowrap;"  id="home" >
+ <span class="w3-padding-large w3-xlarge w3-wide  w3-animate-opacity">  welcome to</span> <br> <span class="w3-center w3-padding-large w3-black w3-xlarge  w3-animate-opacity">  Chitra <span> &nbsp &nbspArt</span>&nbsp &nbsp Printers </span><br>
+	<span class=" w3-padding-large w3-xlarge w3-wide w3-animate-opacity"> Website</span>
+  </div>
+</div>
+<!-- Container (About Section) -->
+<div class="w3-content w3-container w3-padding-64" id="about">
+  <h3 class="w3-center">INFORMATION</h3>
+  <p class="w3-center"><em></em></p>
+  <p></p>
+  <div class="w3-row">
+    <div class="w3-col m6 w3-padding-large">
+      <p class="w3-center  w3-xlarge"><b>Chitra Art Printers</b></p>
+    
+    <!-- Hide this text on small devices -->
+ 
+      <p><h4>I am Gopal Sheth the owner of Chitra Art Printers again Welcoming you to my website.  </h4></p>
+<h4>I am in this industry sinc 1997   </h4>
+<h5>we are specialist in undergarments packaging printing</h5>
+</div>
+ <div class="w3-col m6 w3-padding-large">
+	  <p>
+	     <h5> We Make Follwing Products</h5>
+	     <h6>
+	         <ol type="1">
+	             <li>Stickers</li>
+				 <li>Pvc box</li>
+				 <li>Tag</li>
+				 <li>Box</li>
+				 <li>Visiting Card</li>
+				  <li>Pamphlet</li>
+				   <li>Size label</li>
+	         </ol>
+			And Also In All Types Of Multi-colour Printing And All Type Of Packing Material <br>
+			<a href="#phoneno1"> contact us</a> for more detail
+         </h6>
+		 
+      </p>
+    </div>
+  </div>
+  <p class="w3-large w3-center w3-padding-16">My Work Accuracey Bar</p>
+  <p class="w3-wide">My Work Accuracey</p>
+  <div class="w3-light-grey">
+    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:99%">99%</div>
+  </div>
+  </div>
+
+<div class="w3-row w3-center w3-dark-grey w3-padding-16 ">
+ <div class="w3-quarter w3-section">
+    <span class="w3-xlarge">9990+</span><br>
+    My Clients
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge">9990+</span><br>
+    Projects Done
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge">9900+</span><br>
+    Happy Clients
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge">10000+</span><br>
+    Meetings
+  </div>
+</div>
+
+<!-- Second Parallax Image with Portfolio Text -->
+<div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+    <span class="w3-xxlarge w3-text-white w3-wide">MY WORK</span>
+  </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="w3-content w3-container w3-padding-64" id="portfolio">
+  <h3 class="w3-center">MY WORK EXAMPLE</h3>
+  <p class="w3-center"><em>Here are some pictures of some product we make. <br>These are only sample not originally design.<br>For original and more design <a href="#phoneno1"> contact us</a><br> Click on the images to make them bigger</em></p><br>
+
+  <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
+  <div class="w3-row-padding w3-center w3-section">
+    <div class="w3-col m3">
+      <img src="square.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Square sticker">
+	  Square sticker
+    </div>
+
+    <div class="w3-col m3">
+      <img src="round.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Round sticker">
+	  Round sticker
+    </div>
+
+    <div class="w3-col m3">
+      <img src="label.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Size label">
+	  Size label
+    </div>
+ 
+
+    <div class="w3-col m3">
+      <img src="rtag.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Rectangle Tag">
+	  Rectangle Tag
+    </div>
+  </div>
+
+  <div class="w3-row-padding w3-center w3-section">
+    <div class="w3-col m3">
+      <img src="pvc1.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Pvc box 1">
+	   Pvc box 1
+    </div>
+
+    <div class="w3-col m3">
+      <img src="pvc2.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Pvc box 2">
+	   Pvc box 2
+    </div>
+
+    <div class="w3-col m3">
+      <img src="bill.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Bill book">
+	  Bill book 
+    </div>
+
+    <div class="w3-col m3">
+      <img src="pamphlet.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Pamphlet">
+	  Pamphlet
+    </div>
+   
+  </div>
+  
+   <div class="w3-row-padding w3-center w3-section">
+    <div class="w3-col m3">
+      <img src="corrugated.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="corrugated box">
+	   Corrugated box 
+    </div>
+
+    <div class="w3-col m3">
+      <img src="tbbox.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="top-bottom box">
+	   top-bottom box 
+    </div>
+
+    <div class="w3-col m3">
+      <img src="leaflet1.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="leaflet 1">
+	  leaflet 1
+    </div>
+
+    <div class="w3-col m3">
+      <img src="leaflet2.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="leaflet 2">
+	  leaflet 2
+    </div>
+   
+  </div>
+</div>
+
+
+
+<!-- Third Parallax Image with Portfolio Text -->
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+     <span class="w3-xxlarge w3-text-black w3-wide">CONTACT</span>
+  </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div class="w3-content w3-container w3-padding-64" id="contact">
+  <h3 class="w3-center"></h3>
+  <p class="w3-center" id="phoneno1"><em>I'd love your feedback!</em></p>
+  <p>Contact through <i class="fa fa-envelope"></i> mail for rates or call on <i class="fa fa-phone"></i> phone number:</p>
+<div class="w3-row">
+    <div class="w3-col m6 w3-padding-large">
+      <div class="w3-large w3-margin-bottom">
+       <p> 
+        <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right" ></i> Phone : +91 9819168961 
+		<br><i class="fa fa-fw  w3-xlarge w3-margin-right"></i>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp(contact number)<br>
+        <i class="fa fa-whatsapp fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone : +91 9819168961 
+		<br><i class="fa fa-fw  w3-xlarge w3-margin-right"></i>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp(what's app number)<br>
+        <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email-Id : chitraartprinters168@gmail.com<br>
+		</p>
+      </div>
+</div>
+ <div class="w3-col m6 w3-padding-large">
+	  <form method="post" name="myemailform" action="form-to-email.php">
+        <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+          <div class="w3-half">
+            <input class="w3-input w3-border" type="text" placeholder=" First Name" required name="fname">
+          </div>
+  <div class="w3-half">
+            <input class="w3-input w3-border" type="text" placeholder=" Last Name" required name="lname">
+          </div>                          <div class="w3-half">
+            <input class="w3-input w3-border" type="text" placeholder=" Contat Number" required name="contact">
+          </div>                                                                    
+          <div class="w3-half">
+            <input class="w3-input w3-border" type="text" placeholder="Email" required name="email">
+          </div>
+        </div>
+        <input class="w3-input w3-border" type="text" placeholder="Message" required name="message">
+        <button class="w3-button w3-black w3-right w3-section"  type="submit"   >
+          <i class="fa fa-paper-plane"></i> SEND MESSAGE
+        </button>
+      </form>
+    </div>
+  </div>
+  
+
+   <script language="JavaScript">
+
+var frmvalidator  = new Validator("myemailform");
+frmvalidator.addValidation("fname","req","Please provide your first name"); 
+frmvalidator.addValidation("lname","req","Please provide your last name");                                              
+frmvalidator.addValidation("contact","req","Please provide your contact ");                    
+frmvalidator.addValidation("email","req","Please provide your email"); 
+frmvalidator.addValidation("email","email","Please enter a valid email address"); 
+</script>
+ 
+ </div>
+    <div class=" w3-hide-small w3-margin-24 " id="pay">
+  <p><h4 class="w3-center">Now you can pay throught our website<br> Click on the images to make them bigger</h4></p>
+<div class="w3-center w3-dark-grey w3-padding-16 ">
+ <div class=" w3-section w3-center ">
+ <div class="w3-row-padding w3-center" >
+    <div class="w3-col m3" >
+      <img src="qrpaytm.png" style="width:50%" onclick="onClick(this)" class="w3-hover-opacity" alt="Qr Code of Paytm">
+	  <br>pay with <img src="paytmlogo.png"  style="width:20%">
+    </div>
+
+    <div class="w3-col m3">
+      <img src="qrppay.png" style="width:50%" onclick="onClick(this)" class="w3-hover-opacity" alt="Qr Code of phonepay">
+      <br>pay with Phonepay
+	</div>
+
+    <div class="w3-col m3">
+      <img src="qrgpay.png" style="width:50%" onclick="onClick(this)" class="w3-hover-opacity" alt="Qr Code of Google pay">
+      <br>pay with google pay
+	</div>
+	
+    <div class="w3-col m3">
+	<br>
+	<br>
+	 for bank acount detail,<br>
+	 <a href="#phoneno1">contact us</a><br>
+    </div>
+  </div>
+  </div>
+</div>
+<br>
+ <br>
+</div> 
+ <div class=" w3-hide-large w3-hide-medium w3-margin-24 " id="pays"> 
+<p><h4 class="w3-center">Now you can pay throught our website on Paytm ,Phonepay and Google Pay<br><a href="#ppaytm"><img src="paytmlogo.png"  style="width:20%"></a> &nbsp;&nbsp; <a><img src="phonepelogo.png"  style="width:20%;"></a> &nbsp;&nbsp; <a><img src="googlepaylogo.png"  style="width:18%;" ></a> <br>Click on the images to make them bigger</h4></p>
+<div class="w3-center w3-light-grey w3-padding-16 ">
+ <div class=" w3-section w3-center ">
+ <div class="w3-row-padding w3-center" >
+    <div class="w3-col m3" >
+	   Pay With Paytm<br>	
+      <img src="qrpaytm.png" style="width:30%" onclick="onClick(this)" class="w3-hover-opacity" alt="Qr Code of <img src='paytmlogo.png'  style='width:40%;'>">
+	  <br>&nbsp;&nbsp;&nbsp;&nbsp;<img src="paytmlogo.png"  style="width:20%">
+      <br>
+    </div>
+
+    <div class="w3-col m3">
+	  Pay With Phonepay<br>	
+      <img id="ppaytm"src="qrppay.png" style="width:30%" onclick="onClick(this)" class="w3-hover-opacity" alt="Qr Code of <img src='phonepelogo.png'  style='width:40%;'>">
+	  <br><img src="phonepelogo.png"  style="width:20%;">
+    </div>
+
+    <div class="w3-col m3">
+	  Pay With Google Pay<br>	
+      <img src="qrgpay.png" style="width:30%" onclick="onClick(this)" class="w3-hover-opacity" alt="Qr Code of <img src='googlepaylogo.png'  style='width:40%;'>">
+	  <br><img src="googlepaylogo.png"  style="width:18%;" >
+    </div>
+	
+    <div class="w3-col m3">
+	&nbsp
+	<br>
+	<br>
+	 for bank acount detail,<br>
+	 <a href="#phoneno1">contact us</a><br>
+    </div>
+  </div>
+  </div>
+</div>
+
+<br><br><br>
+  </div> 
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+
+  <p>Copyright @ <script>document.write(new Date().getFullYear());</script>. All Rights Reserved.</p>
+    <p>Powered by Chitra Art printers</p>
+</footer>
+
+<script>
+
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("img02").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+
+// Change style of navbar on scroll
+window.onscroll = function() {myFunction()};
+function myFunction() {
+    var navbar = document.getElementById("myNavbar");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+    } else {
+        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+    }
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function toggleFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+
+<!-- Modal for full size images on click-->
+<div id="modal01" class="w3-modal w3-white" onclick="this.style.display='none'" >
+  <span class="w3-button w3-large w3-white w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-50" >
+    <img id="img01" class="w3-image  w3-hide-large " style="width:100%;">
+    <img id="img02" class="w3-image   w3-hide-small w3-hide-medium" style="width:50%;">
+    <p id="caption" class="w3-opacity w3-large"></p>
+  </div>
+</div>
+                             
+</body>
+</html>

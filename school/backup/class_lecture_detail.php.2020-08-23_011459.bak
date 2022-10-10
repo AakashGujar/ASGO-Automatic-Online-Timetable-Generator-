@@ -1,0 +1,34 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php')
+
+if(isset($_POST['class_lecture_detail']))
+{
+	
+}
+else if(isset($_POST['class_time_detail']))
+{
+	header('Location:time_detail.php?class_time_detail=class');
+}
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type='text/css' rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="javascript/jQuery 3.5.1.js"></script>
+<title>Homepage</title>
+</head>
+<body>
+
+</body>
+</html>

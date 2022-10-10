@@ -1,0 +1,15 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//inilized session variable
+$session["institute_short_name"]="svpvv";
+$session["institute_type"]="school";
+
+//inilized variable
+$institute_dbname=$session["institute_short_name"]."_".$session["institute_type"];
+
+?>

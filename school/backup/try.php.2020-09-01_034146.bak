@@ -1,0 +1,111 @@
+<?php
+//storing data into global variable
+  $institute_start_hour			= 9.00;
+  $institute_start_minute		= 0.00;
+  $institute_start_amorpm		= "am";
+  $institute_end_hour			= 16.00;
+  $institute_end_minute			= 00;
+  $institute_end_amorpm			= "pm";
+  $institute_lecture_time_gap	= 0.45;
+  $recess_count					= 1;
+  $first_recess_start_hour		= 12.00;
+  $first_recess_start_minute	= 0.30;
+  $first_recess_start_amorpm	= "pm";
+  $first_recess_end_hour		= 12.15;
+  $first_recess_end_minute		= 0.00;
+  $first_recess_end_amorpm		= "pm";
+  $first_recess_time_gap		= 0.15;
+  $second_recess_start_hour		= 1.00;
+  $second_recess_start_minute	= 0.00;
+  $second_recess_start_amorpm	= "pm";
+  $second_recess_end_hour		= 1;
+  $second_recess_end_minute		= 0.0;
+  $second_recess_end_amorpm		= "pm";
+  $second_recess_time_gap		= 0.30;
+  $daily_lecture_count			= 6;
+  $holiday						= 1;
+  $closed_day					= 3;
+  $halfday						= 1;
+  $opened_day					= 5;
+  $halfday_lecture_count		= 3;
+  $srno=1;
+
+//min+hour
+$institute_start_hour=$institute_start_hour+$institute_start_minute;
+$first_recess_start_hour=$institute_start_hour+$first_recess_start_minute;
+$first_recess_end_hour=$first_recess_end_hour+$first_recess_end_minute;
+
+ //calculating total number of lecture
+$five_days_lecture_count=$daily_lecture_count *5;
+$six_days_lecture_count=$daily_lecture_count *6;
+$fiveday_plus_halfday_lecture_count=$five_days_lecture_count + $halfday_lecture_count ;
+$total_day_count=6;
+ //allocating total number of lecture
+ if(($holiday == 1)&($halfday == 1)){
+	$total_lecture_count=$five_days_lecture_count;
+	$total_day_count=5;
+ }
+ else if(($holiday == 0)&($halfday == 1)){
+	$total_lecture_count=$fiveday_plus_halfday_lecture_count;
+ }
+ else if(($holiday == 0)&($halfday == 0)){
+	$total_lecture_count=$six_days_lecture_count;
+ }
+ 
+//timmming loop
+if($recess_count == 1)
+{
+	echo "<br>before recess";
+	$minute=$institute_start_minute;
+	//before recess
+	for($i=$institute_start_hour;$i <= $first_recess_start_hour;)
+	{
+		echo "<br>".number_format((float)$i, 2);
+		
+		echo "<br>".$minute=$minute+$institute_lecture_time_gap;
+		echo "<br>";
+		if($minute >= "0.60" )
+		{
+			$minus="0.60";
+			$minute=$minute - $minus;
+			$i=floor($i)+1.0;
+			
+		}
+		$i=floor($i)+$minute;  
+	}
+	
+	echo "<br>recess";	
+	
+	
+	echo "<br>after recess";
+	//after recess
+	echo "<br>recess";
+	if($minute >= "0.60" )
+		{
+			$minus="0.60";
+			$minute=$minute - $minus;
+		}
+	
+	for($i=$first_recess_end_hour;$i <= $institute_end_hour;)
+	{
+		echo "<br>".number_format((float)$i, 2);
+		
+		echo "<br>".$minute=$minute+$institute_lecture_time_gap;
+		echo "<br>";
+		if($minute >= "0.60" )
+		{
+			$minus="0.60";
+			$minute=$minute - $minus;
+			$i=floor($i)+1.0;
+			
+		}
+		$i=floor($i)+$minute;  
+	}
+}
+	/*
+
+$fullpath = 'jklm/file.ext/hhshsh';
+$folder = substr($fullpath, 0, strpos($fullpath, '/'));
+echo $folder;
+// Output => folderName*/
+?>

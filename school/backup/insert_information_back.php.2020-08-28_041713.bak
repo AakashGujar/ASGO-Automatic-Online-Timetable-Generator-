@@ -1,0 +1,509 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//inlized global variable
+$lecture_information_count="";
+$lecture_place_detail_count="";
+$teacher_detail_count="";
+$student_detail_count="";
+    
+//connection to database
+include('user_connection.php');
+
+//exctration of data from table lecture information
+if(isset($_POST['display_lecture_information']))
+{
+    /* Finding lecture information table in database */
+	$sql_query1="SELECT * FROM lecture_information";
+	$result1=$conn->query($sql_query1);/* execution of query */
+    if($result1 == "")
+	{
+        echo '
+            <tr>
+                <td colspan="6">No Lecture Found</td>
+            </tr>
+            ';
+    }
+    else
+    {
+        /* counting no of row from lecture information table */
+        $lecture_information_count=$result1->num_rows;
+		
+		if($result1->num_rows > 0)
+		{
+			while($data1=$result1->fetch_array())
+			{
+                /* storing data from lecture information table to array variable*/
+				$srno[]					= $data1['srno'];
+				$lecture_full_name[]	= $data1['col_lecture_full_name'];
+				$lecture_short_name[]	= $data1['col_lecture_short_name'];
+				$lecture_type[]			= $data1['col_lecture_type'];
+				$lecture_place[]		= $data1['col_lecture_place'];
+			}
+		}
+		
+        if( $lecture_information_count == 0 )
+        {
+            echo '
+            <tr>
+                <td colspan="6">No Lecture Found</td>
+            </tr>
+            ';
+        }
+        else
+        {
+            //displaying data of lecture information table in loop
+            for($i=0;$i<$lecture_information_count;$i++)
+            {
+               echo '
+                <tr>
+					<td>
+						<input type="text" name="post_lecture_full_name'.$srno[$i].'" id="post_lecture_full_name'.$srno[$i].'" placeholder="Name" value="'.$lecture_full_name[$i].'">
+					</td>
+					<td>
+						<input type="text" name="post_lecture_short_name'.$srno[$i].'" id="post_lecture_short_name'.$srno[$i].'" placeholder="Short Name" maxlength="5" value="'.$lecture_short_name[$i].'">
+					</td>
+                    <td>
+                        <select name="post_lecture_type'.$srno[$i].'" id="post_lecture_type'.$srno[$i].'">';
+						  $first_option=$lecture_type[$i];
+					       $lecture_type_array=array('Theory(TH)','Pratical(PR)','Extracurricular Activities(EA)');
+						
+						  echo '
+							<option value="'.$first_option.'">'.$lecture_type_array[$first_option].'</option>
+						  ';
+						
+						  for($j=0;$j < 3;$j++)
+						  {
+							if($lecture_type[$i] != $j)
+							{
+								echo '<option value="'.$j.'">'.$lecture_type_array[$j].'</option>';
+							}
+						  }
+						
+                echo '	</select>
+					</td>
+                    <td>
+                        <select name="post_lecture_place'.$srno[$i].'" id="post_lecture_place'.$srno[$i].'">';
+						  $first_option=$lecture_place[$i];
+					       $lecture_place_array=array('Classroom','Lab','Auditorium','Ground');
+						
+						  echo '
+							<option value="'.$first_option.'">'.$lecture_place_array[$first_option].'</option>
+						  ';
+						
+						  for($j=0;$j < 4;$j++)
+						  {
+							if($lecture_place[$i] != $j)
+							{
+								echo '<option value="'.$j.'">'.$lecture_place_array[$j].'</option>';
+							}
+						  }
+						
+                echo '	</select>
+					</td>
+                    <td><button type="submit" name="update_lecture_information" id="'.$srno[$i].'" onclick="update_lecture_information(this.id)">Update</button></td>
+                    <td><button type="submit" name="remove_lecture_information" id="'.$srno[$i].'" onclick="remove_lecture_information(this.id)">Remove</button></td>
+                </tr>
+               '; 
+            }
+        }
+        
+    }
+}
+
+//insert lecture information table
+if(isset($_POST['insert_lecture_information']))
+{
+    /* creating user lecture information table  */
+    $sql_query2="CREATE TABLE IF NOT EXISTS lecture_information
+    ( /* Column name                        Column data type */
+        srno            	    int NOT NULL AUTO_INCREMENT,
+        col_lecture_full_name   text,
+        col_lecture_short_name  text,
+        col_lecture_type        text,
+        col_lecture_place       text,
+        PRIMARY KEY (`srno`)
+	);";
+    $conn->query($sql_query2);/* execution of query */
+    
+    //storing data into variable
+     $lecture_full_name		= htmlspecialchars($_POST['post_lecture_full_name']);
+     $lecture_short_name	= htmlspecialchars($_POST['post_lecture_short_name']);
+     $lecture_type			= htmlspecialchars($_POST['post_lecture_type']);
+     $lecture_place			= htmlspecialchars($_POST['post_lecture_place']);
+    
+    /* inserting data in user lecture information table */
+  $sql_statement1=$conn->prepare("
+  INSERT INTO lecture_information
+ (
+	col_lecture_full_name,
+	col_lecture_short_name,
+	col_lecture_type,
+	col_lecture_place
+ )VALUES(?,?,?,?)");
+  
+  $sql_statement1->bind_param("ssss",
+	$lecture_full_name,
+	$lecture_short_name,
+	$lecture_type,
+	$lecture_place
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+
+//update lecture information table
+if(isset($_POST['update_lecture_information']))
+{
+    //storing data into variable
+     $srno		            = htmlspecialchars($_POST['post_srno']);
+     $lecture_full_name		= htmlspecialchars($_POST['post_lecture_full_name']);
+     $lecture_short_name	= htmlspecialchars($_POST['post_lecture_short_name']);
+     $lecture_type			= htmlspecialchars($_POST['post_lecture_type']);
+     $lecture_place			= htmlspecialchars($_POST['post_lecture_place']);
+    
+  /* updating data in user lecture information table */
+  $sql_statement1=$conn->prepare("
+  UPDATE lecture_information SET
+	col_lecture_full_name	=	?,
+	col_lecture_short_name  =	?,
+    col_lecture_type	    =	?,
+	col_lecture_place	    =	?
+	WHERE srno              =   ?
+ ");
+  
+  $sql_statement1->bind_param("ssssi",                         
+	$lecture_full_name,
+	$lecture_short_name,
+	$lecture_type,
+	$lecture_place,
+    $srno 
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+
+//remove data from lecture information table
+if(isset($_POST['remove_lecture_information']))
+{
+    
+}
+
+//exctration of data from table lecture information
+if(isset($_POST['display_lecture_place_detail']))
+{
+    /* Finding lecture place detail table in database */
+	$sql_query1="SELECT * FROM lecture_place_detail";
+	$result1=$conn->query($sql_query1);/* execution of query */
+    if($result1 == "")
+	{
+        echo '
+            <tr>
+                <td colspan="4">No place detail Found</td>
+            </tr>
+            ';
+    }
+    else
+    {
+        /* counting no of row from lecture place detail table */
+        $lecture_place_detail_count=$result1->num_rows;
+		
+		if($result1->num_rows > 0)
+		{
+			while($data1=$result1->fetch_array())
+			{
+                /* storing data from lecture place detail table to array variable*/
+				$srno[]					= $data1['srno'];
+				$lecture_place_name[]	= $data1['col_lecture_place_name'];
+				$lecture_place[]	    = $data1['col_lecture_place'];
+			}
+		}
+		
+        if( $lecture_place_detail_count == 0 )
+        {
+            echo '
+            <tr>
+                <td colspan="4">No place detail Found</td>
+            </tr>
+            ';
+        }
+        else
+        {
+            //displaying data of lecture information table in loop
+            for($i=0;$i<$lecture_place_detail_count;$i++)
+            {
+               echo '
+                <tr>
+					<td>
+						<input type="text" name="post_lecture_place_name'.$srno[$i].'" id="post_lecture_place_name'.$srno[$i].'" placeholder="Name" value="'.$lecture_place_name[$i].'">
+					</td>
+                    <td>
+                        <select name="post_lecture_place'.$srno[$i].'" id="post_lecture_place'.$srno[$i].'">';
+						  $first_option=$lecture_place[$i];
+					       $lecture_place_array=array('Lab','Auditorium','Ground');
+						
+						  echo '
+							<option value="'.$first_option.'">'.$lecture_place_array[$first_option].'</option>
+						  ';
+						
+						  for($j=0;$j < 3;$j++)
+						  {
+							if($lecture_place[$i] != $j)
+							{
+								echo '<option value="'.$j.'">'.$lecture_place_array[$j].'</option>';
+							}
+						  }
+						
+                echo '	</select>
+					</td>
+                    <td><button type="submit" name="update_lecture_place_detail" id="'.$srno[$i].'" onclick="update_lecture_place_detail(this.id)">Update</button></td>
+                    <td><button type="submit" name="remove_lecture_information" id="'.$srno[$i].'" onclick="remove_lecture_information(this.id)">Remove</button></td>
+                </tr>
+               '; 
+            }
+        }
+        
+    }
+}
+
+//insert lecture place detail table
+if(isset($_POST['insert_lecture_place_detail']))
+{
+    /* creating user lecture information table  */
+    $sql_query2="CREATE TABLE IF NOT EXISTS lecture_place_detail
+    ( /* Column name                        Column data type */
+        srno            	    int NOT NULL AUTO_INCREMENT,
+        col_lecture_place_name     text,
+        col_lecture_place          text,
+        PRIMARY KEY (`srno`)
+	);";
+    $conn->query($sql_query2);/* execution of query */
+    
+    //storing data into variable
+     $lecture_place_name	= htmlspecialchars($_POST['post_lecture_place_name']);
+     $lecture_place			= htmlspecialchars($_POST['post_lecture_place']);
+    
+    /* inserting data in user lecture information table */
+  $sql_statement1=$conn->prepare("
+  INSERT INTO lecture_place_detail
+ (
+	col_lecture_place_name,
+	col_lecture_place
+ )VALUES(?,?)");
+  
+  $sql_statement1->bind_param("ss",
+	$lecture_place_name,
+	$lecture_place
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+
+//update lecture place detail table
+if(isset($_POST['update_lecture_place_detail']))
+{
+    //storing data into variable
+     $srno		            = htmlspecialchars($_POST['post_srno']);
+     $lecture_place_name	= htmlspecialchars($_POST['post_lecture_place_name']);
+     $lecture_place			= htmlspecialchars($_POST['post_lecture_place']);
+    
+  /* updating data in user lecture place detail table */
+  $sql_statement1=$conn->prepare("
+  UPDATE lecture_place_detail SET
+	col_lecture_place_name	=	?,
+	col_lecture_place	    =	?
+	WHERE srno              =   ?
+ ");
+  
+  $sql_statement1->bind_param("ssi",                         
+	$lecture_place_name,
+	$lecture_place,
+    $srno 
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+
+//remove data from lecture place detail table
+if(isset($_POST['remove_lecture_place_detail']))
+{
+    
+}
+
+//exctration of data from table teacher detail
+if(isset($_POST['display_teacher_detail']))
+{
+    /* Finding teacher detail table in database */
+	$sql_query1="SELECT * FROM teacher_detail";
+	$result1=$conn->query($sql_query1);/* execution of query */
+    if($result1 == "")
+	{
+        echo '
+            <tr>
+                <td colspan="8">No Lecture Found</td>
+            </tr>
+            ';
+    }
+    else
+    {
+        /* counting no of row from teacher detail table */
+        $teacher_detail_count=$result1->num_rows;
+		
+		if($result1->num_rows > 0)
+		{
+			while($data1=$result1->fetch_array())
+			{
+                /* storing data from teacher detail table to array variable*/
+				$srno[]							= $data1['srno'];
+				$teacher_first_name[]			= $data1['col_teacher_first_name'];
+				$teacher_middle_name[]			= $data1['col_teacher_middle_name'];
+				$teacher_last_name[]			= $data1['col_teacher_last_name'];
+				$teacher_short_name[]			= $data1['col_teacher_short_name'];
+				$teacher_id[]	        		= $data1['col_teacher_id'];
+				$teacher_default_password[]		= $data1['col_teacher_default_password'];
+			}
+		}
+		
+        if( $teacher_detail_count == 0 )
+        {
+            echo '
+            <tr>
+                <td colspan="8">No Lecture Found</td>
+            </tr>
+            ';
+        }
+        else
+        {
+            //displaying data of teacher detail table in loop
+            for($i=0;$i<$teacher_detail_count;$i++)
+            {
+               echo '
+                <tr>
+					<td>
+						<input type="text" name="post_teacher_first_name'.$srno[$i].'" id="post_teacher_first_name'.$srno[$i].'" placeholder="First Name" value="'.$teacher_first_name[$i].'">
+					</td>
+					<td>
+						<input type="text" name="post_teacher_middle_name'.$srno[$i].'" id="post_teacher_middle_name'.$srno[$i].'" placeholder="Middle Name" value="'.$teacher_middle_name[$i].'">
+					</td>
+					<td>
+						<input type="text" name="post_teacher_last_name'.$srno[$i].'" id="post_teacher_last_name'.$srno[$i].'" placeholder="Last Name" value="'.$teacher_last_name[$i].'">
+					</td>
+					<td>
+						<input type="text" name="post_teacher_short_name'.$srno[$i].'" id="post_teacher_short_name'.$srno[$i].'" placeholder="Short Name" value="'.$teacher_short_name[$i].'" maxlength="5" >
+					</td>
+					<td>
+						'.$teacher_id[$i].'
+					</td><td>
+						'.$default_password[$i].'
+					</td>
+                    <td><button type="submit" name="update_teacher_detail" id="'.$srno[$i].'" onclick="update_teacher_detail(this.id)">Update</button></td>
+                    <td><button type="submit" name="remove_teacher_detail" id="'.$srno[$i].'" onclick="remove_teacher_detail(this.id)">Remove</button></td>
+                </tr>
+               '; 
+            }
+        }
+        
+    }
+}
+
+//insert lecture information table
+if(isset($_POST['insert_teacher_detail']))
+{
+    /* creating user teacher detail table  */
+    $sql_query2="CREATE TABLE IF NOT EXISTS lecture_information
+    ( /* Column name                        Column data type */
+        srno            	    		int NOT NULL AUTO_INCREMENT,
+        col_teacher_first_name      	text,
+        col_teacher_middle_name     	text,
+        col_teacher_last_name       	text,
+        col_teacher_short_name      	text,
+        col_teacher_id              	text,
+        col_teacher_default_password    text,
+        col_teacher_password            text,
+        PRIMARY KEY (`srno`)
+	);";
+    $conn->query($sql_query2);/* execution of query */
+    
+    //storing data into variable
+     $teacher_first_name		= htmlspecialchars($_POST['post_teacher_first_name']);
+     $teacher_middle_name	    = htmlspecialchars($_POST['post_teacher_middle_name']);
+     $teacher_last_name			= htmlspecialchars($_POST['post_teacher_last_name']);
+     $teacher_short_name		= htmlspecialchars($_POST['post_teacher_short_name']);
+    
+    //creating id
+    $teacher_id=$institute_dbname."_".$teacher_short_name."@aotg.com";
+    
+    //creating password
+	$specialchar_array = array("`", "~", "!", "@", "$","#", "%", "^", "&", "*", "-", "_", "=", "+", ".", "/" , "|", "?");
+	$specialchar_random_array = array_rand($specialchar_array, 2);
+	$specialchar=$specialchar_array[$specialchar_random_array[0]];
+
+	$alphabet_array = array("a", "b", "c", "d", "e","f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p" , "q", "r", "s", "t", "u", "v", "w","x", "y", "z","A", "B", "C", "D", "E","F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P" , "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z" );
+	$alphabet1 = array_rand($alphabet_array, 4);
+	$alphabets = $alphabet_array[$alphabet1['0']].$alphabet_array[$alphabet1['1']];
+	$alphabet =$alphabet_array[$alphabet1['2']].$alphabet_array[$alphabet1['3']];
+
+	$numerical2 = array("1", "2", "3", "4", "5","6", "7", "8", "9");
+	$numerical1 = array_rand($numerical2, 4);
+	$numericals = $numerical2[$numerical1['0']].$numerical2[$numerical1['1']];
+	$numerical=$numerical2[$numerical1['2']].$numerical2[$numerical1['3']];
+
+	$teacher_default_password=$alphabets.$numericals.$specialchar.$alphabet.$numerical
+    
+    
+    /* inserting data in user teacher detail table */
+  $sql_statement1=$conn->prepare("
+  INSERT INTO lecture_information
+ (
+	col_lecture_full_name,
+	col_lecture_short_name,
+	col_lecture_type,
+	col_lecture_place
+ )VALUES(?,?,?,?)");
+  
+  $sql_statement1->bind_param("ssss",
+	$lecture_full_name,
+	$lecture_short_name,
+	$lecture_type,
+	$lecture_place
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+
+//update teacher detail table
+if(isset($_POST['update_teacher_detail']))
+{
+    //storing data into variable
+     $srno		            = htmlspecialchars($_POST['post_srno']);
+     $lecture_full_name		= htmlspecialchars($_POST['post_lecture_full_name']);
+     $lecture_short_name	= htmlspecialchars($_POST['post_lecture_short_name']);
+     $lecture_type			= htmlspecialchars($_POST['post_lecture_type']);
+     $lecture_place			= htmlspecialchars($_POST['post_lecture_place']);
+    
+  /* updating data in user teacher detail table */
+  $sql_statement1=$conn->prepare("
+  UPDATE lecture_information SET
+	col_lecture_full_name	=	?,
+	col_lecture_short_name  =	?,
+    col_lecture_type	    =	?,
+	col_lecture_place	    =	?
+	WHERE srno              =   ?
+ ");
+  
+  $sql_statement1->bind_param("ssssi",                         
+	$lecture_full_name,
+	$lecture_short_name,
+	$lecture_type,
+	$lecture_place,
+    $srno 
+  );
+  $sql_statement1->execute();/* execution of query */
+}
+
+//remove data from teacher detail table
+if(isset($_POST['remove_teacher_detail']))
+{
+    
+}
+
+?>

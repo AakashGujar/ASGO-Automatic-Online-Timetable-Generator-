@@ -1,0 +1,46 @@
+                       if($subject_lecture_count == $day_count){
+                           /* Finding free solt in  timetable table in database */
+                            $sql_query71="SELECT col_day FROM ".$class_table_name."_timetable WHERE col_lecture_name='".$lecture_name."' "; 
+                            $result71=$conn->query($sql_query71);/* execution of query */ 
+                            /* extractinng free_solt from table in database */
+                            while($data71 = $result71->fetch_array())
+                            {
+                                $present_day_array[]=$data71['col_day'];
+                            }
+                               $day_array=array('0','1','2','3','4','5');
+                               $day_array=array_diff($present_day_array,$day_array);
+                               array_splice($day_array,$closed_day,1);
+                               $day_array_count=count($day_array);
+                               foreach($day_array as $free_day)
+                               {
+                                   /* Extractin  freesolt information from teacher table table in database */
+                                    echo "<br>".$sql_query70="SELECT * FROM ".$class_table_name."_timetable WHERE  col_day='".$free_day."' AND col_day_wise_id NOT IN('0','1') AND col_row_span NOT IN('2','3') AND col_lecture_type NOT IN('2','1')";
+                                    $result70=$conn->query($sql_query70);/* execution of query */
+                                    while($data70 = $result70->fetch_array())
+                                    {
+                                       $check_srno=$data70['srno'];
+                                       $checking_timming_id=$data70['col_timming_id'];
+                                           $reject=check_subject_free_solt($conn,$check_srno,$class_table_name,$lecture_name,$free_day,$free_srno,$timming_id,$timming,$teacher_name);
+                                         if($reject == 1)
+                                         {
+                                             continue;
+                                         }
+                                         else
+                                         {
+                                            $timming_id=$sub_reject; 
+                                          checking_of_insert_data($teacher_name,$lecture_name,$lecture_type,$lecture_place,$class_table_name,$row_span,$day,$timming,$timming_id,$conn,$subject_color);
+                                             break;
+                                         }
+                                    }
+                                   if($reject != 1)
+                                   {
+                                      break;
+                                   }
+                               }
+                              if($reject != 1)
+                              {
+                                  continue;
+                              }
+                             unset($reject);
+                           }
+                           

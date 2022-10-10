@@ -1,0 +1,85 @@
+<?php
+//session start 
+@ob_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+//connection to database
+include('user_connection.php')
+
+?>
+
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage</title>
+</head>
+<body>
+
+<div class="" id="">
+<label>Time Detail</label>
+<form method="post" target="_self" action="time_detail.php" >
+	
+	<button type="submit" name="institute_time_detail" id="institute_time_detail" >Institute</button>
+	
+	<button type="submit" name="teacher_time_detail" id="teacher_time_detail" >Teacher</button>
+
+	<button type="submit" name="class_time_detail" id="class_time_detail" >Class</button>
+
+</form>
+</div>
+
+<div class="" id="">
+<label>Insert Information</label>
+<form method="post" target="_self" action="insert_information.php" >
+
+	<button type="submit" name="lecture_place_detail" id="lecture_place_detail" >Place For Lecture</button>
+	
+	<button type="submit" name="lecture_detail" id="lecture_detail" >Lecture</button>
+	
+	<button type="submit" name="teacher_detail" id="teacher_detail" >Teacher</button>
+	
+	<button type="submit" name="student_detail" id="student_detail" >Student</button>
+
+</form>
+<label>Remove Information</label>
+<form method="post" target="_self" action="remove_information.php" >
+	
+	<button type="submit" name="lecture_place_detail" id="lecture_place_detail" >Place For Lecture</button>
+		
+	<button type="submit" name="lecture_detail" id="lecture_detail" >Lecture</button>
+	
+	<button type="submit" name="teacher_detail" id="teacher_detail" >Teacher</button>
+	
+	<button type="submit" name="student_detail" id="student_detail" >Student</button>
+
+</form>
+</div>
+
+<div class="" id="">
+<label>Detail For Schedule</label>
+<form method="post" target="_self" action="class_lecture_detail.php" >
+	
+	<button type="submit" name="class_lecture_detail" id="class_lecture_detail" >Lectures For Class</button>
+	
+	<button type="submit" name="class_time_detail" id="class_time_detail" >Class Time Detail</button>
+
+</form>
+</div>
+
+<div class="" id="">
+<label>Schedule Generator From</label>
+<form method="post" target="_self" action="redirectpage.php" >
+	
+	<button type="submit" name="institute_time_detail" id="institute_time_detail" >New Details</button>
+	
+	<button type="submit" name="teacher_time_detail" id="teacher_time_detail" >Old Details(Pre-Filled Information)</button>
+
+</form>
+</div>
+
+</body>
+</html>
