@@ -1,12 +1,9 @@
 <?php
 //session start 
-@ob_start();
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-include ("header.php");
+include('session.php');
+include('userheader.php');
 //connection to database
-include('user_connection.php');
+//include('user_connection.php');
 
 //declaration global variable
 $class_detail="";
@@ -21,7 +18,7 @@ if(isset($_POST['institute_time_detail']))
 {
 	  $type_name="Institute";
 	/* Finding institute_time_detail table in database */
-	$sql_query1="SELECT * FROM institute_time_detail";
+	$sql_query1="SELECT * FROM ".$login_session."_institute_time_detail";
 	$result1=$conn->query($sql_query1);/* execution of query */
 	if($result1 == "")
 	{
@@ -70,7 +67,7 @@ if(isset($_POST['teacher_time_detail']))
                      <option value="ns" >Not Selected</option>
 					';
                         /* Finding teacher detail table in database */
-	                    $sql_query2="SELECT * FROM teacher_detail";
+	                    $sql_query2="SELECT * FROM ".$login_session."_teacher_detail";
                         $result2=$conn->query($sql_query2);/* execution of query */
                         if($result2 == "")
 	                    {
@@ -129,7 +126,7 @@ if(isset($_POST['teacher_time_detail']))
 
 if(isset($_POST['select_teacher_name']))
 {
-	$teacher_table_name=$_POST['select_teacher_name'];	
+	$teacher_table_name=$login_session."_".$_POST['select_teacher_name'];	
     $type_name="Teacher";
 	/* Finding teacher_time_detail table in database */
 	$sql_query3="SELECT * FROM ".$teacher_table_name."_time_detail";
@@ -139,7 +136,7 @@ if(isset($_POST['select_teacher_name']))
 		//not get teacher_time_detail table in database
         
         /* Finding institute_time_detail table in database */
-	   $sql_query4="SELECT * FROM institute_time_detail";
+	   $sql_query4="SELECT * FROM ".$login_session."_institute_time_detail";
 	   $result4=$conn->query($sql_query4);/* execution of query */
 	   if($result4 == "")
 	   {
@@ -208,7 +205,7 @@ if(isset($_POST['class_time_detail']) || isset($_GET['class_time_detail']))
 
 if(isset($_POST['class_name']))
 {
-	$class_table_name=$_POST['class_name'].$_POST['class_div'];	
+	$class_table_name=$login_session."_".$_POST['class_name'].$_POST['class_div'];	
     $type_name="Class";
     
 	/* Finding class_time_detail table in database */
@@ -219,7 +216,7 @@ if(isset($_POST['class_name']))
         //not get class_time_detail table in database
         
         /* Finding institute_time_detail table in database */
-	   $sql_query6="SELECT * FROM institute_time_detail";
+	   $sql_query6="SELECT * FROM ".$login_session."_institute_time_detail";
 	   $result6=$conn->query($sql_query6);/* execution of query */
 	   if($result6 == "")
 	   {
@@ -297,22 +294,25 @@ if(isset($_POST['class_name']))
 	}
 	
 }
-
-
 ?>
-
 <!DOCTYPE html PUBLIC>
 <html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type='text/css' rel="stylesheet" href="css/style.css">
+    <link type='text/css' rel="stylesheet" href="css/styles.css">
     <script type="text/javascript" src="javascript/jQuery 3.5.1.js"></script>
     <title>Time Detail</title>
 </head>
 
-<body>
+<body style="color:black;">
+    <div class="line">
+         <div class="box  margin-bottom">
+            <div class="margin2x">
+               
+		<section class="s-12 l-11">
+
     <!-- section of techer/class -->
     <?php 
   echo $selection;
@@ -406,10 +406,10 @@ echo '
 			</tr>
             
              <!-- recess 2 time detail -->
-            <tr class="second_recess_tr hide">
+            <tr class="second_recess_tr hides">
                 <th scope="row" colspan="4">Second Recess Time Detail</th>
             </tr>
-            <tr class="second_recess_tr hide">
+            <tr class="second_recess_tr hides">
 				<th scope="row">Start Time</th>
 				<td>
                     <input type="number" name="post_second_recess_strat_hour" id="post_second_recess_strat_hour" placeholder="hour"  min="1" max="24" autofocus  >
@@ -425,7 +425,7 @@ echo '
                     </select>
                 </td>
 			</tr>
-			<tr class="second_recess_tr hide">
+			<tr class="second_recess_tr hides">
 				<th scope="row">End Time</th>
 				<td>
                     <input type="number" name="post_second_recess_end_hour" id="post_second_recess_end_hour" placeholder="hour"  min="1" max="24" autofocus  >
@@ -483,13 +483,13 @@ echo '
 				<td> </td>
 				<td> </td>
             </tr> 
-            <tr class="holiday_no_tr hide"> 
+            <tr class="holiday_no_tr hides"> 
 				<th scope="row" >Whether institute having halfday ?</th>
 				<td><input type="radio" id="halfday_yes" name="post_halfday" value="1" checked> Yes</td> 
                 <td><input type="radio" id="halfday_no" name="post_halfday" value="0" > No</td> 
 				<td> </td>
             </tr> 
-            <tr class="holiday_no_tr halfday_yes_tr hide"> 
+            <tr class="holiday_no_tr halfday_yes_tr hides"> 
 				<th scope="row" >on which day institute having halfday ?</th>
                 <td> 
                     <select name="post_opened_day">
@@ -505,7 +505,7 @@ echo '
 				<td> </td>
 				<td> </td>
             </tr> 
-            <tr class="holiday_no_tr halfday_yes_tr hide">  
+            <tr class="holiday_no_tr halfday_yes_tr hides">  
 				<th scope="row" >how many lecture will there ?</th>
 				<td colspan="1"> <input type="number" name="post_halfday_lecture_count" min="1" max="10" placeholder="Halfday Lecture Count"></td>
 				<td> </td>
@@ -519,7 +519,7 @@ echo '
 if($newdata == "0")
 {
   echo '
-<form method="post" target="_self" action="time_detail_back.php" >
+<form method="post" target="_self" action="time_detail_back.php" width="80%">
 	<input type=hidden id=post_class_name name=post_class_name value="'.$class_table_name.'">
 	<input type=hidden id=post_teacher_name name=post_teacher_name value="'.$teacher_table_name.'">
     <table width="100%" border="1" cellspacing="1" cellpadding="1">
@@ -536,7 +536,7 @@ if($newdata == "0")
                     <input type="number" name="post_institute_strat_minute" id="post_institute_strat_minute" placeholder=" minute" min="0" max="60" value="'.$data['col_institute_start_minute'].'" >
 				</td>
 				<td>
-                    <select name="post_institute_start_amorpm" class="hide">
+                    <select name="post_institute_start_amorpm" class="hides">
                         <option value="'.$data['col_institute_start_amorpm'].'" >'.$data['col_institute_start_amorpm'].'</option>';
 						if($data['col_institute_start_amorpm'] != "Am")
 						{
@@ -558,7 +558,7 @@ if($newdata == "0")
                     <input type="number" name="post_institute_end_minute" id="post_institute_end_minute" placeholder=" minute"  min="0" max="60" autofocus value="'.$data['col_institute_end_minute'].'" >
 				</td>
 				<td>
-                    <select name="post_institute_end_amorpm" class="hide">
+                    <select name="post_institute_end_amorpm" class="hides">
                         <option value="'.$data['col_institute_end_amorpm'].'" >'.$data['col_institute_end_amorpm'].'</option>';
 						if($data['col_institute_end_amorpm'] != "Am")
 						{
@@ -609,7 +609,7 @@ if($newdata == "0")
                     <input type="number" name="post_first_recess_strat_minute" id="post_first_recess_strat_minute" placeholder=" minute"  min="0" max="60" autofocus value="'.$data['col_first_recess_start_minute'].'" >
 				</td>
 				<td>
-                    <select name="post_first_recess_start_amorpms" class="hide">
+                    <select name="post_first_recess_start_amorpms" class="hides">
                         <option value="'.$data['col_first_recess_start_amorpm'].'" >'.$data['col_first_recess_start_amorpm'].'</option>';
 						if($data['col_first_recess_start_amorpm'] != "Am")
 						{
@@ -631,7 +631,7 @@ if($newdata == "0")
                     <input type="number" name="post_first_recess_end_minute" id="post_first_recess_end_minute" placeholder=" minute"  min="0" max="60" autofocus value="'.$data['col_first_recess_end_minute'].'" >
 				</td>
 				<td>
-                    <select name="post_first_recess_end_amorpms" class="hide">
+                    <select name="post_first_recess_end_amorpms" class="hides">
                         <option value="'.$data['col_first_recess_end_amorpm'].'" >'.$data['col_first_recess_end_amorpm'].'</option>';
 						if($data['col_first_recess_end_amorpm'] != "Am")
 						{
@@ -646,11 +646,11 @@ if($newdata == "0")
 			</tr>
             
              <!-- recess 2 time detail -->
-            <tr class="second_recess_tr hide">';
-    if($data['col_second_recess_start_hour'] != "00"){
+            <tr class="second_recess_tr hides">';
+    
                echo ' <th scope="row" colspan="4">Second Recess Time Detail</th>
             </tr>
-            <tr  class="second_recess_tr hide">
+            <tr  class="second_recess_tr hides">
 				 <th scope="row">Start Time</th>
 				<td>
                     <input type="number" name="post_second_recess_strat_hour" id="post_second_recess_strat_hour" placeholder="hour"  min="1" max="24" autofocus value="'.$data['col_second_recess_start_hour'].'" >
@@ -659,7 +659,7 @@ if($newdata == "0")
                   <input type="number" name="post_second_recess_strat_minute" id="post_second_recess_strat_minute" placeholder=" minute"  min="0" max="60" autofocus value="'.$data['col_second_recess_start_minute'].'" >
 				</td>
 				<td>
-                    <select name="post_second_recess_start_amorpms" class="hide">
+                    <select name="post_second_recess_start_amorpms" class="hides">
                         <option value="'.$data['col_second_recess_start_amorpm'].'" >'.$data['col_second_recess_start_amorpm'].'</option>';
 						if($data['col_second_recess_start_amorpm'] != "Am")
 						{
@@ -672,7 +672,7 @@ if($newdata == "0")
               echo '</select>
                 </td>
 			</tr>
-			<tr  class="second_recess_tr hide">
+			<tr  class="second_recess_tr hides">
 				<th scope="row">End Time</th>
 				<td>
                     <input type="number" name="post_second_recess_end_hour" id="post_second_recess_end_hour" placeholder="hour"  min="1" max="24" autofocus  value="'.$data['col_second_recess_end_hour'].'" >
@@ -681,7 +681,7 @@ if($newdata == "0")
                     <input type="number" name="post_second_recess_end_minute" id="post_second_recess_end_minute" placeholder=" minute"  min="0" max="60" autofocus  value="'.$data['col_second_recess_end_minute'].'" >
 				</td>
 				<td>
-                    <select name="post_second_recess_end_amorpms" class="hide">
+                    <select name="post_second_recess_end_amorpms" class="hides">
                         <option value="'.$data['col_second_recess_end_amorpm'].'" >'.$data['col_second_recess_end_amorpm'].'</option>';
 						if($data['col_second_recess_end_amorpm'] != "Am")
 						{
@@ -693,7 +693,7 @@ if($newdata == "0")
 						}							
               echo '</select>
                 </td>';
-}
+
 			echo '</tr>
             
             <!-- student detail -->
@@ -776,7 +776,7 @@ if($newdata == "0")
 				<td> </td>
 				<td> </td>
             </tr> 
-            <tr class="holiday_no_tr hide"> 
+            <tr class="holiday_no_tr hides"> 
 				<th scope="row" >Whether institute having halfday ?</th>';
 				if($data['col_halfday'] != "0")
 				{
@@ -799,7 +799,7 @@ if($newdata == "0")
 			   
 	echo	'<td> </td>
             </tr> 
-            <tr class="holiday_no_tr halfday_yes_tr hide"> 
+            <tr class="holiday_no_tr halfday_yes_tr hides"> 
 				<th scope="row" >on which day institute having halfday ?</th>
                 <td> 
                     <select name="post_opened_day">';
@@ -823,7 +823,7 @@ if($newdata == "0")
 				<td> </td>
 				<td> </td>
             </tr> 
-            <tr class="holiday_no_tr halfday_yes_tr hide">';  
+            <tr class="holiday_no_tr halfday_yes_tr hides">';  
      if($data['col_halfday_lecture_count'] != "0"){
 				echo '<th scope="row" >how many lecture will there ?</th>
 				<td colspan="1"> <input type="number" name="post_halfday_lecture_count" min="1" max="10" placeholder="Halfday Lecture Count" value="'.$data['col_halfday_lecture_count'].'" ></td>
@@ -843,23 +843,23 @@ if($newdata == "0")
         var col_halfday = "<?php echo $data['col_halfday']; ?>";
 
         if (col_recess_count != 2) {
-            $('.second_recess_tr').addClass('hide');
+            $('.second_recess_tr').addClass('hides');
         } else {
-            $('.second_recess_tr').removeClass('hide');
+            $('.second_recess_tr').removeClass('hides');
         }
 
         if (col_holiday != 0) {
-            $('.holiday_no_tr').addClass('hide');
-            $('.holiday_yes_tr').removeClass('hide');
+            $('.holiday_no_tr').addClass('hides');
+            $('.holiday_yes_tr').removeClass('hides');
         } else {
-            $('.holiday_no_tr').removeClass('hide');
-            $('.holiday_yes_tr').addClass('hide');
+            $('.holiday_no_tr').removeClass('hides');
+            $('.holiday_yes_tr').addClass('hides');
         }
 
         if (col_halfday != 0 && col_holiday == 0) {
-            $('.halfday_yes_tr').removeClass('hide');
+            $('.halfday_yes_tr').removeClass('hides');
         } else {
-            $('.halfday_yes_tr').addClass('hide');
+            $('.halfday_yes_tr').addClass('hides');
         }
 
     </script>
@@ -874,6 +874,10 @@ if($newdata == "0")
 				<span id="close" class="close" >OK</span>-->
         </center>
     </div>
+            </section>
+            </div>
+         </div>
+      </div>
 </body>
 <script>
     // Get the modal
@@ -936,33 +940,33 @@ console.log(lecture_gap_time);
         }
     }
 
-    //hide tab
+    //hides tab
     $(document).ready(function() {
 
         $('#first_recess').click(function() {
-            $('.second_recess_tr').addClass('hide');
+            $('.second_recess_tr').addClass('hides');
         });
 
         $('#second_recess').click(function() {
-            $('.second_recess_tr').removeClass('hide');
+            $('.second_recess_tr').removeClass('hides');
         });
 
         $('#holiday_yes').click(function() {
-            $('.holiday_no_tr').addClass('hide');
-            $('.holiday_yes_tr').removeClass('hide');
+            $('.holiday_no_tr').addClass('hides');
+            $('.holiday_yes_tr').removeClass('hides');
         });
 
         $('#holiday_no').click(function() {
-            $('.holiday_no_tr').removeClass('hide');
-            $('.holiday_yes_tr').addClass('hide');
+            $('.holiday_no_tr').removeClass('hides');
+            $('.holiday_yes_tr').addClass('hides');
         });
 
         $('#halfday_yes').click(function() {
-            $('.halfday_yes_tr').removeClass('hide');
+            $('.halfday_yes_tr').removeClass('hides');
         });
 
         $('#halfday_no').click(function() {
-            $('.halfday_yes_tr').addClass('hide');
+            $('.halfday_yes_tr').addClass('hides');
         });
 
     });

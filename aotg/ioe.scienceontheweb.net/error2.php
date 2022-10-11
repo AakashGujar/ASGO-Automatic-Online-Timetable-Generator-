@@ -1,0 +1,1 @@
+<?php $error=""; echo $error;?>
